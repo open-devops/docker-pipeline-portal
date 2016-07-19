@@ -22,11 +22,20 @@ RUN set -ex \
 ENV NPM_CONFIG_LOGLEVEL info
 ENV NODE_VERSION 6.3.0
 
+#Copy portal tar file to container
+COPY PipelinePortal.tar /tmp
+
 RUN curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.xz" \
   && curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/SHASUMS256.txt.asc" \
   && gpg --batch --decrypt --output SHASUMS256.txt SHASUMS256.txt.asc \
   && grep " node-v$NODE_VERSION-linux-x64.tar.xz\$" SHASUMS256.txt | sha256sum -c - \
   && tar -xJf "node-v$NODE_VERSION-linux-x64.tar.xz" -C /usr/local --strip-components=1 \
-  && rm "node-v$NODE_VERSION-linux-x64.tar.xz" SHASUMS256.txt.asc SHASUMS256.txt
+  && rm "node-v$NODE_VERSION-linux-x64.tar.xz" SHASUMS256.txt.asc SHASUMS256.txt \
+  && mkdir /opt/devops; cd /opt/devops \
+  && tar xvf /tmp/PipelinePortal.tar . \
+  && cd PipelinePortal \
+  && npm install
 
-CMD [ "node" ]
+WORKDIR /opt/devops/PipelinePortal
+
+ENTRYPOINT ["npm", "start"]
