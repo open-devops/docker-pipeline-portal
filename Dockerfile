@@ -38,4 +38,5 @@ RUN curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-
 
 WORKDIR /opt/devops/PipelinePortal
 
-ENTRYPOINT ["npm", "start"]
+CMD cat app/data/capabilities.json.template |sed s/PORTAL_LOCALHOST/${PORTAL_LOCALHOST}/g >app/data/capabilities.json && \
+npm start
