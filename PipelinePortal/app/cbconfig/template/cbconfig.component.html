@@ -1,0 +1,331 @@
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <div class="row">
+        <div>
+            <h1 class="page-header">
+                Capabilities Config
+            </h1>
+            <ol class="breadcrumb">
+                <li class="active">
+                    <i class="fa fa-wrench"></i> Capabilities Config Management
+                </li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="filter">
+            <select class="form-control" [(ngModel)]="filterOrgName">
+                <option *ngFor="let organization of organizations" value="{{organization.id}}">{{organization.name}}</option>
+            </select>
+        </div>
+        <div class="filter">
+            <select class="form-control" [(ngModel)]="filterProdName">
+                <option *ngFor="let product of products" value="{{product.id}}">{{product.name}}</option>
+            </select>
+        </div>
+        <div class="filter">
+            <select class="form-control" [(ngModel)]="filterPlName">
+                <option *ngFor="let pipeline of pipelines" value="{{pipeline.id}}">{{pipeline.name}}</option>
+            </select>
+        </div>
+        <div class="filter">
+            <select class="form-control" [(ngModel)]="filterPLRole">
+                <option *ngFor="let plRole of plRoles" value="{{plRole.id}}">{{plRole.name}}</option>
+            </select>
+        </div>
+    </div>
+    
+    <div class="row">
+        <hr>
+    </div>
+
+    <!--CAP_CM-->
+    <div *ngIf="filterPLRole == 'CAP_CM'">
+        <!--Node-->
+        <div class="row">
+            <label class="col-md-2">
+                Node
+            </label>
+            <div class="col-md-3">
+                <select class="form-control">
+                    <option value="">Docker</option>
+                    <option value="">VM</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <select class="form-control">
+                    <option value="">Git</option>
+                    <option value="">SVN</option>
+                </select>
+            </div>
+        </div>
+
+        <!--Repository URL-->
+        <div class="row">
+            <label class="col-md-2">
+                Repository URL
+            </label>
+            <div class="col-md-6">
+                <input class="form-control" class="form-control" type="" name="" value="https://github.hpe.com/DDC-SEED/devops-meshark">
+            </div>
+        </div>
+
+        <!--Source Path-->
+        <div class="row">
+            <label class="col-md-2">
+                Source Path
+            </label>
+            <div class="col-md-6">
+                <input class="form-control" class="form-control" type="" name="" value="/src/main">
+            </div>
+        </div>
+
+        <!--Test Path-->
+        <div class="row">
+            <label class="col-md-2">
+                Test Path
+            </label>
+            <div class="col-md-6">
+                <input class="form-control" class="form-control" type="" name="" value="/src/main">
+            </div>
+        </div>
+    </div>
+
+    <!--CAP_CI-->
+    <div *ngIf="filterPLRole == 'CAP_CI'">
+        <!--Node-->
+        <div class="row">
+            <label class="col-md-2">
+                Node
+            </label>
+            <div class="col-md-3">
+                <select class="form-control">
+                    <option value="">Docker</option>
+                    <option value="">VM</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <select class="form-control">
+                    <option value="">Jenkins Master</option>
+                    <option value="">Jenkins Salve</option>
+                </select>
+            </div>
+        </div>
+
+        <!--inputs-->
+        <div class="row">
+            <label class="col-md-2">
+                inputs
+            </label>
+            <div class="col-md-3">
+                <select class="form-control">
+                    <option value="">brand</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <select class="form-control">
+                    <option value="">master</option>
+                </select>
+            </div>
+        </div>
+
+        <!--triggers-->
+        <div class="row">
+            <label class="col-md-2">
+                triggers
+            </label>
+            <div class="col-md-3">
+                <select class="form-control">
+                    <option value="">push</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <!--CAP_CR-->
+    <div *ngIf="filterPLRole == 'CAP_CR'">
+        <!--Quality Inspection Node-->
+        <div class="row">
+            <label class="col-md-2">
+                Quality Inspection Node
+            </label>
+            <div class="col-md-3">
+                <select class="form-control">
+                    <option value="">Docker</option>
+                    <option value="">VM</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <select class="form-control">
+                    <option value="">SonarQube</option>
+                </select>
+            </div>
+        </div>
+
+        <!--Security Inspection Node-->
+        <div class="row">
+            <label class="col-md-2">
+                Security Inspection Node
+            </label>
+            <div class="col-md-3">
+                <select class="form-control">
+                    <option value="">VM</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <select class="form-control">
+                    <option value="">Fortify</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <!--CAP_CB-->
+    <div *ngIf="filterPLRole == 'CAP_CB'">
+        <!--Node-->
+        <div class="row">
+            <label class="col-md-2">
+                Node
+            </label>
+            <div class="col-md-3">
+                <select class="form-control">
+                    <option value="">Docker</option>
+                    <option value="">VM</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <select class="form-control">
+                    <option value="">Jenkins Agent</option>
+                </select>
+            </div>
+        </div>
+
+        <!--Builder-->
+        <div class="row">
+            <label class="col-md-2">
+                Builder
+            </label>
+            <div class="col-md-3">
+                <select class="form-control">
+                    <option value="">Gradle</option>
+                    <option value="">Maven</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <input class="form-control" type="" name="" value="" placeholder="Define project specified build command">
+            </div>
+        </div>
+    </div>
+
+    <!--CAP_CD-->
+    <div *ngIf="filterPLRole == 'CAP_CD'">
+        <!--Node-->
+        <div class="row">
+            <label class="col-md-2">
+                Node
+            </label>
+            <div class="col-md-3">
+                <select class="form-control">
+                    <option value="">Docker</option>
+                    <option value="">VM</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <select class="form-control">
+                    <option value="">Jenkins Agent</option>
+                    <option value="">dev</option>
+                    <option value="">test</option>
+                    <option value="">perf</option>
+                </select>
+            </div>
+        </div>
+
+        <!--Target Node-->
+        <div class="row">
+            <label class="col-md-2">
+                Target Node
+            </label>
+            <div class="col-md-3">
+                <select class="form-control">
+                    <option value="">Docker</option>
+                    <option value="">VM</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <select class="form-control">
+                    <option value="">Jenkins Agent</option>
+                    <option value="">dev</option>
+                    <option value="">test</option>
+                    <option value="">perf</option>
+                </select>
+            </div>
+        </div>
+
+        <!--Target Node-->
+        <div class="row">
+            <label class="col-md-2">
+                Target Node
+            </label>
+            <div class="col-md-3">
+                <select class="form-control">
+                    <option value="">Docker</option>
+                    <option value="">VM</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <select class="form-control">
+                    <option value="">Jenkins Agent</option>
+                    <option value="">dev</option>
+                    <option value="">test</option>
+                    <option value="">perf</option>
+                </select>
+            </div>
+        </div>
+
+        <!--Target Node-->
+        <div class="row">
+            <label class="col-md-2">
+                Target Node
+            </label>
+            <div class="col-md-3">
+                <select class="form-control">
+                    <option value="">Docker</option>
+                    <option value="">VM</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <select class="form-control">
+                    <option value="">Jenkins Agent</option>
+                    <option value="">dev</option>
+                    <option value="">test</option>
+                    <option value="">perf</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <!--CAP_CT-->
+    <div *ngIf="filterPLRole == 'CAP_CT'">
+        <!--Node-->
+        <div class="row">
+            <label class="col-md-2">
+                Node
+            </label>
+            <div class="col-md-3">
+                <select class="form-control">
+                    <option value="">Docker</option>
+                    <option value="">VM</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <select class="form-control">
+                    <option value="">Jenkins Agent</option>
+                    <option value="">dev</option>
+                    <option value="">test</option>
+                    <option value="">perf</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>

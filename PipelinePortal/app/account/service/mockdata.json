@@ -1,0 +1,66 @@
+[
+  {
+    "id": "DDC_01",
+    "orgId": "DDC_01",
+    "name": "UserA",
+    "email": "UserA@devops.com",
+    "token": "AccessToken_DDC_01",
+    "role": "admin"
+  },
+  {
+    "id": "DDC_11",
+    "orgId": "DDC_01",
+    "name": "UserB",
+    "email": "UserB@devops.com",
+    "token": "AccessToken_DDC_11",
+    "role": "Member"
+  },
+  {
+    "id": "DDC_21",
+    "orgId": "DDC_02",
+    "name": "UserC",
+    "email": "UserC@devops.com",
+    "token": "AccessToken_DDC_21",
+    "role": "admin"
+  },
+  {
+    "id": "DDC_31",
+    "orgId": "DDC_02",
+    "name": "UserD",
+    "email": "UserD@devops.com",
+    "token": "AccessToken_DDC_31",
+    "role": "admin"
+  },
+  {
+    "id": "DDC_41",
+    "orgId": "DDC_02",
+    "name": "UserE",
+    "email": "UserE@devops.com",
+    "token": "AccessToken_DDC_41",
+    "role": "PM"
+  },
+  {
+    "id": "DDC_51",
+    "orgId": "DDC_02",
+    "name": "UserF",
+    "email": "UserF@devops.com",
+    "token": "AccessToken_DDC_51",
+    "role": "admin"
+  },
+  {
+    "id": "DDC_61",
+    "orgId": "DDC_03",
+    "name": "UserG",
+    "email": "UserG@devops.com",
+    "token": "AccessToken_DDC_61",
+    "role": "PM"
+  },
+  {
+    "id": "DDC_71",
+    "orgId": "DDC_03",
+    "name": "UserH",
+    "email": "UserH@devops.com",
+    "token": "AccessToken_DDC_71",
+    "role": "PM"
+  }
+]

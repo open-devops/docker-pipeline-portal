@@ -1,6 +1,6 @@
-import { Capability } from '../data/capability';
 import { Injectable } from '@angular/core';
 import { Http, Response  } from '@angular/http';
+import { Capability } from '../data/capability';
 import { CapabilityTemplate } from '../data/capability-template';
 
 import 'rxjs/add/operator/toPromise';

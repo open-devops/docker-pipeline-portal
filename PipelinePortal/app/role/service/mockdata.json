@@ -1,0 +1,32 @@
+[
+    {
+        "id": "DDC_Role_01",
+        "orgId": "DDC_01",
+        "name": "DDC_Role_01",
+        "description": "This is DDC_Role_01."
+    },
+    {
+        "id": "DDC_Role_02",
+        "orgId": "DDC_02",
+        "name": "DDC_Role_02",
+        "description": "This is DDC_Role_02."
+    },
+    {
+        "id": "DDC_Role_03",
+        "orgId": "DDC_02",
+        "name": "DDC_Role_03",
+        "description": "This is DDC_Role_03."
+    },
+    {
+        "id": "DDC_Role_04",
+        "orgId": "DDC_03",
+        "name": "DDC_Role_04",
+        "description": "This is DDC_Role_04."
+    },
+    {
+        "id": "DDC_Role_05",
+        "orgId": "DDC_04",
+        "name": "DDC_Role_05",
+        "description": "This is DDC_Role_05."
+    }
+]

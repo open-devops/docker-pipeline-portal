@@ -1,0 +1,47 @@
+[
+    {
+        "name": "Organization",
+        "path": "/organization",
+        "class": "fa fa-fw fa-building"
+    },
+    {
+        "name": "Account",
+        "path": "/account",
+        "class": "fa fa-fw fa-users"
+    },
+    {
+        "name": "Role",
+        "path": "/role",
+        "class": "fa fa-fw fa-users"
+    },
+    {
+        "name": "Product",
+        "path": "/product",
+        "class": "fa fa-fw fa-tasks"
+    },
+    {
+        "name": "Permission",
+        "path": "/permission",
+        "class": "fa fa-fw fa-key"
+    },
+    {
+        "name": "Pipeline Configuration",
+        "path": "/plconfig",
+        "class": "fa fa-fw fa-wrench"
+    },
+    {
+        "name": "Capabilities Configuration",
+        "path": "/cbconfig",
+        "class": "fa fa-fw fa-wrench"
+    },
+    {
+        "name": "Control Pad",
+        "path": "/ctlpad",
+        "class": "fa fa-fw fa-crosshairs"
+    },
+    {
+        "name": "Dashboard",
+        "path": "/dashboard",
+        "class": "fa fa-fw fa-dashboard"
+    }
+]

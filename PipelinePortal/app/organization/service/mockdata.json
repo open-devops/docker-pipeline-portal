@@ -1,0 +1,27 @@
+[
+    {
+        "id": "DDC_01",
+        "name": "DDC_01",
+        "description": "This is ddc_01."
+    },
+    {
+        "id": "DDC_02",
+        "name": "DDC_02",
+        "description": "This is ddc_02."
+    },
+    {
+        "id": "DDC_03",
+        "name": "DDC_03",
+        "description": "This is ddc_03."
+    },
+    {
+        "id": "DDC_04",
+        "name": "DDC_04",
+        "description": "This is ddc_04."
+    },
+    {
+        "id": "DDC_05",
+        "name": "DDC_05",
+        "description": "This is ddc_05."
+    }
+]
