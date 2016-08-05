@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
-import { SiteMenu } from '../data/sitemenu';
+import { SiteMenu } from '../data/siteMenu';
 
 import 'rxjs/add/operator/toPromise';
 

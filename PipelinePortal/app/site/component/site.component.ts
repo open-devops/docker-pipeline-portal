@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ROUTER_DIRECTIVES, Router } from '@angular/router';
 import { HTTP_PROVIDERS } from '@angular/http';
-import { SiteMenu } from '../data/sitemenu';
+import { SiteMenu } from '../data/siteMenu';
 import { SiteService } from '../service/site.service';
 
 @Component({
