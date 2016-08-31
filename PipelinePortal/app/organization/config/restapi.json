@@ -1,0 +1,18 @@
+[
+    {
+        "id": "organization.getAll",
+        "url": "organizations"
+    },
+    {
+        "id": "organization.add",
+        "url": "organizations"
+    },
+    {
+        "id": "organization.put",
+        "url": "organizations"
+    },
+    {
+        "id": "organization.remove",
+        "url": "organizations/{id}"
+    }
+]

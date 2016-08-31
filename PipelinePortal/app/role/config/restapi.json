@@ -1,0 +1,22 @@
+[
+    {
+        "id": "role.getById",
+        "url": "roles/{id}"
+    },
+    {
+        "id": "role.getAllByOrgId",
+        "url": "roles/organization/{organizationId}"
+    },
+    {
+        "id": "role.add",
+        "url": "roles"
+    },
+    {
+        "id": "role.put",
+        "url": "roles"
+    },
+    {
+        "id": "role.remove",
+        "url": "roles/{id}"
+    }
+]

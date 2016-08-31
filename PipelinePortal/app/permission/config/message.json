@@ -1,0 +1,37 @@
+[
+  {
+    "id": "per-001",
+    "content": "Faile to get organization data.",
+    "type": "error"
+  },
+  {
+    "id": "per-002",
+    "content": "Faile to get role data.",
+    "type": "error"
+  },
+  {
+    "id": "per-003",
+    "content": "Faile to get account data.",
+    "type": "error"
+  },
+  {
+    "id": "per-004",
+    "content": "Faile to get product data.",
+    "type": "error"
+  },
+  {
+    "id": "per-005",
+    "content": "Faile to get permission data.",
+    "type": "error"
+  },
+  {
+    "id": "per-006",
+    "content": "Faile to save permission data.",
+    "type": "error"
+  },
+  {
+    "id": "per-007",
+    "content": "Faile to delete permission data.",
+    "type": "error"
+  }
+]

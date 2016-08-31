@@ -1,10 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { ROUTER_DIRECTIVES} from '@angular/router';
-import { HTTP_PROVIDERS } from '@angular/http';
-import { Role } from '../data/role';
+import { HTTP_PROVIDERS, ConnectionBackend, Jsonp } from '@angular/http';
+import { Organization } from '../../organization/model/organization';
+import { OrganizationService } from '../../organization/service/organization.service';
+import { Role } from '../model/role';
 import { RoleService } from '../service/role.service';
 import { ObjectService } from '../../common/service/object.service';
 import { AcountDispPipe } from '../pipe/role.pipe';
+import { RestApiCfg } from '../../common/service/restapicfg.service';
+import { RestApi } from '../../common/service/restapi.service';
+import { MessageService } from '../../common/service/message.service';
+import { ToastsManager} from 'ng2-toastr/ng2-toastr';
 
 @Component({
     moduleId: module.id,
@@ -13,9 +19,16 @@ import { AcountDispPipe } from '../pipe/role.pipe';
     styleUrls: ['../style/role.component.css', '../../share/css/global.css'],
     directives: [ROUTER_DIRECTIVES],
     providers: [
+        OrganizationService,
         RoleService,
         ObjectService,
-        HTTP_PROVIDERS
+        RestApiCfg,
+        RestApi,
+        MessageService,
+        ToastsManager,
+        HTTP_PROVIDERS,
+        ConnectionBackend,
+        Jsonp
     ],
     pipes: [AcountDispPipe]
 })
@@ -28,30 +41,72 @@ export class RoleComponent implements OnInit {
     error: any;
 
     constructor(
+        private organizationService: OrganizationService,
         private roleService: RoleService,
-        private objectService: ObjectService) { }
+        private objectService: ObjectService,
+        private msgService: MessageService
+    ) { }
 
     ngOnInit() {
-        this.organizations = [
-            {'id': 'DDC_01', 'name': 'DDC_01'},
-            {'id': 'DDC_02', 'name': 'DDC_02'},
-            {'id': 'DDC_03', 'name': 'DDC_03'},
-            {'id': 'DDC_04', 'name': 'DDC_04'}
-        ];
-        this.filterOrgId = "DDC_01";
         this.currRole = new Role();
-        this.getRoles();
+        this.filterOrgId = "";
+        this.msgService.loadCfgData('app/role/config/message.json');
+        this.organizationService.init()
+                                 .then(res => 
+                                 {
+                                     this.getOrganizations();
+                                 });
+        this.roleService.init();
     }
 
-    getRoles() {
+    getOrganizations() {
+        this.organizationService
+            .getOrganizations()
+            .then(organizations => {
+                if (!organizations) {
+                    this.msgService.error('role-001');
+                    this.organizations = new Array<Organization>();
+                } else {
+                    this.organizations = organizations;
+                    if (this.organizations.length > 0) {
+                        this.filterOrgId = this.organizations[0].id;
+                        this.orgChange(null);
+                    }
+                }
+                
+            })
+            .catch(error => {
+                this.error = error;
+                this.msgService.error('role-001');
+            });
+    }
+
+    orgChange($event: any) {
+        this.roles = [];
+        this.getRoles(this.filterOrgId);
+    }
+
+    getRoles(id: string) {
         this.roleService
-            .getRoles()
-            .then(roles => this.roles = roles)
-            .catch(error => this.error = error);
+            .getRoles(id)
+            .then(roles => {
+                if (!roles) {
+                    this.msgService.error('role-002');
+                    this.roles = new Array<Role>();
+                } else {
+                    this.roles = roles;
+                }
+                
+            })
+            .catch(error => {
+                this.error = error;
+                this.msgService.error('role-002');
+            });
     }
 
     newRole() {
         this.currRole = new Role();
+        this.currRole.organizationId = this.filterOrgId;
         this.switchModalRole(true);
     }
 
@@ -63,16 +118,38 @@ export class RoleComponent implements OnInit {
     saveRole(role: Role) {
         this.roleService
             .saveRole(this.roles, role)
-            .then(roles => this.refreshData(this, roles))
-            .catch(error => this.error = error);
+            .then(roles => {
+                if (!roles) {
+                    this.msgService.error('role-003');
+                } else {
+                    this.refreshData(this, roles)
+                }
+            })
+            .catch(error => {
+                this.error = error;
+                this.msgService.error('role-003');
+            });
     }
 
-    removeRole(role: Role, event: any) {
-        event.stopPropagation();
+    confirmRemoveRole(role: Role) {
+        this.currRole = role;
+        this.switchModalRole(true);
+    }
+
+    removeRole(role: Role) {
         this.roleService
             .removeRole(this.roles, role)
-            .then(roles => this.refreshData(this, roles))
-            .catch(error => this.error = error);
+            .then(roles => {
+                if (!roles) {
+                    this.msgService.error('role-004');
+                } else {
+                    this.refreshData(this, roles)
+                }
+            })
+            .catch(error => {
+                this.error = error;
+                this.msgService.error('role-004');
+            });
     }
 
     private refreshData(comp: any, roles: Role[]) {

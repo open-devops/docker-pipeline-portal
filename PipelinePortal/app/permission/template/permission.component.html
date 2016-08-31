@@ -15,18 +15,18 @@
 
     <div class="row">
         <div class="filter">
-            <select class="form-control" [(ngModel)]="filterOrgName">
+            <select class="form-control" [(ngModel)]="filterOrgId" (ngModelChange)="orgChange($event)">
                 <option *ngFor="let organization of organizations" value="{{organization.id}}">{{organization.name}}</option>
             </select>
         </div>
         <div class="filter">
-            <select class="form-control" [(ngModel)]="filterProdName">
-                <option *ngFor="let product of products" value="{{product.id}}">{{product.name}}</option>
+            <select class="form-control" [(ngModel)]="filterProdName" (ngModelChange)="prodChange($event)">
+                <option *ngFor="let product of products" value="{{product}}">{{product}}</option>
             </select>
         </div>
         <div class="filter">
-            <select class="form-control" [(ngModel)]="filterPlName">
-                <option *ngFor="let pipeline of pipelines" value="{{pipeline.id}}">{{pipeline.name}}</option>
+            <select class="form-control" [(ngModel)]="filterPlId" (ngModelChange)="plChange($event)">
+                <option *ngFor="let pipeline of pipelines" value="{{pipeline.pipelineId}}">{{pipeline.pipelineName}}</option>
             </select>
         </div>
         <div class="permission-add">
@@ -56,18 +56,17 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let permission of (permissions | acountDispPipe:filterOrgName :filterProdName :filterPlName)">
-                    <!--<tr *ngFor="let permission of (permissions)">-->
-                        <td>{{permission.orgName}}</td>
-                        <td>{{permission.prodName}}</td>
-                        <td>{{permission.plName}}</td>
+                    <tr *ngFor="let permission of permissions">
+                        <td>{{permission.organizationName}}</td>
+                        <td>{{permission.productName}}</td>
+                        <td>{{permission.pipelineName}}</td>
                         <td>{{permission.accountName}}</td>
-                        <td>{{permission.permission}}</td>
+                        <td>{{permission.roleName}}</td>
                         <td style="width: 120px;">
                             <button type="button" class="btn btn-success" data-toggle="tooltip" title="Modify Informations" data-toggle="modal" data-target="#modal_dlg" (click)="modifyPermission(permission, $event);">
                                 <span class="glyphicon glyphicon-pencil"></span>
                             </button>
-                            <button type="button" class="btn btn-danger" data-toggle="tooltip" title="Remove Permission" (click)="removePermission(permission, $event);">
+                            <button type="button" class="btn btn-danger" data-toggle="tooltip" title="Remove Permission" data-toggle="modal" data-target="#del_dlg" (click)="confirmRemovePermission(permission, $event);">
                                 <span class="glyphicon glyphicon-trash"></span>
                             </button>
                         </td>
@@ -79,7 +78,28 @@
         
     </div>
 
-    <!-- Modal -->
+    <!-- Modal Delete Confirm-->
+    <div class="modal fade" id="del_dlg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">
+                        Remove Account
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div>Are you sure you want to delete the permission bellow?</div>
+                    <p>{{currPermission.accountName}} ： {{currPermission.roleName}}</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="removePermission(currPermission);">Remove</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Add/Modify-->
     <div class="modal fade" id="modal_dlg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -96,25 +116,34 @@
         </div>
         <div class="modal-body">
             <form>
-            <div class="form-group">
+            <!--<div class="form-group">
                 <label for="recipient-name" class="control-label">Organization:</label>
-                <input type="text" class="form-control" [(ngModel)]="currPermission.orgName">
+                <label for="">{{currPermission.organizationName}}</label>
             </div>
             <div class="form-group">
                 <label for="message-text" class="control-label">Product:</label>
-                <input class="form-control"  [(ngModel)]="currPermission.prodName">
+                <label for="">{{currPermission.productName}}</label>
             </div>
             <div class="form-group">
                 <label for="message-text" class="control-label">Pipeline:</label>
-                <input class="form-control"  [(ngModel)]="currPermission.plName">
-            </div>
+                <label for="">{{currPermission.pipelineName}}</label>
+            </div>-->
             <div class="form-group">
                 <label for="message-text" class="control-label">Account:</label>
-                <input class="form-control"  [(ngModel)]="currPermission.accountName">
+                <div *ngIf="currPermission.id == ''">
+                    <select class="form-control" [(ngModel)]="currPermission.accountId">
+                        <option *ngFor="let account of accounts" value="{{account.id}}">{{account.name}}</option>
+                    </select>
+                </div>
+                <div *ngIf="currPermission.id != ''">
+                        <label for="">{{currPermission.accountName}}</label>
+                </div>
             </div>
             <div class="form-group">
                 <label for="message-text" class="control-label">Permission:</label>
-                <input class="form-control"  [(ngModel)]="currPermission.permission">
+                <select class="form-control" [(ngModel)]="currPermission.roleId">
+                    <option *ngFor="let role of roles" value="{{role.id}}">{{role.name}}</option>
+                </select>
             </div>
             </form>
         </div>

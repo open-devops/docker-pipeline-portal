@@ -1,9 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ROUTER_DIRECTIVES} from '@angular/router';
-import { HTTP_PROVIDERS } from '@angular/http';
-import { Organization } from '../data/organization';
+import { HTTP_PROVIDERS, ConnectionBackend, Jsonp } from '@angular/http';
+import { Organization } from '../model/organization';
 import { OrganizationService } from '../service/organization.service';
 import { ObjectService } from '../../common/service/object.service';
+import { RestApiCfg } from '../../common/service/restapicfg.service';
+import { RestApi } from '../../common/service/restapi.service';
+import { MessageService } from '../../common/service/message.service';
+import { ToastsManager} from 'ng2-toastr/ng2-toastr';
 
 @Component({
     moduleId: module.id,
@@ -14,7 +18,13 @@ import { ObjectService } from '../../common/service/object.service';
     providers: [
         OrganizationService,
         ObjectService,
-        HTTP_PROVIDERS
+        RestApiCfg,
+        RestApi,
+        MessageService,
+        HTTP_PROVIDERS,
+        ToastsManager,
+        ConnectionBackend,
+        Jsonp
     ]
 })
 
@@ -25,18 +35,33 @@ export class OrganizationComponent implements OnInit {
 
     constructor(
         private organizationService: OrganizationService,
-        private objectService: ObjectService) { }
+        private objectService: ObjectService,
+        private msgService: MessageService
+    ) { }
 
     ngOnInit() {
         this.currOrganization = new Organization();
-        this.getOrganizations();
+        this.msgService.loadCfgData('app/organization/config/message.json');
+        this.organizationService.init()
+                                 .then(res => 
+                                 {
+                                     this.getOrganizations();
+                                 });
     }
 
     getOrganizations() {
         this.organizationService
             .getOrganizations()
-            .then(organizations => this.organizations = organizations)
-            .catch(error => this.error = error);
+            .then(organizations => {
+                if (!organizations) {
+                    this.msgService.error('org-001');
+                }
+                this.organizations = organizations || new Array<Organization>();
+            })
+            .catch(error => {
+                this.error = error;
+                this.msgService.error('org-001');
+            });
     }
 
     newOrg() {
@@ -52,16 +77,38 @@ export class OrganizationComponent implements OnInit {
     saveOrg(organization: Organization) {
         this.organizationService
             .saveOrganization(this.organizations, organization)
-            .then(organizations => this.refreshData(this, organizations))
-            .catch(error => this.error = error);
+            .then(organizations => {
+                if (!organizations) {
+                    this.msgService.error('org-004');
+                } else {
+                    this.refreshData(this, organizations)
+                }
+            })
+            .catch(error => {
+                this.error = error;
+                this.msgService.error('org-004');
+            });
     }
 
-    removeOrg(organization: Organization, event: any) {
-        event.stopPropagation();
+    confirmRemoveOrg(organization: Organization) {
+        this.currOrganization = organization;
+        this.switchModalOrganization(true);
+    }
+
+    removeOrg(organization: Organization) {
         this.organizationService
             .removeOrganization(this.organizations, organization)
-            .then(organizations => this.refreshData(this, organizations))
-            .catch(error => this.error = error);
+            .then(organizations => {
+                if (!organizations) {
+                    this.msgService.error('org-003');
+                } else {
+                    this.refreshData(this, organizations)
+                }
+            })
+            .catch(error => {
+                this.error = error;
+                this.msgService.error('org-003');
+            });
     }
 
     private refreshData(comp: any, organizations: Organization[]) {

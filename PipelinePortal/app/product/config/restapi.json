@@ -1,0 +1,34 @@
+[
+    {
+        "id": "prod.getAll",
+        "url": "products"
+    },
+    {
+        "id": "prod.getById",
+        "url": "products/{id}"
+    },
+    {
+        "id": "prod.getAllByOrgId",
+        "url": "products/organization/{organizationId}"
+    },
+    {
+        "id": "prod.getAllByOrgIdAndName",
+        "url": "products/organization/product"
+    },
+    {
+        "id": "prod.getByPlId",
+        "url": "products/organization/product/pipeline/{pipelineId}"
+    },
+    {
+        "id": "prod.add",
+        "url": "products"
+    },
+    {
+        "id": "prod.put",
+        "url": "products"
+    },
+    {
+        "id": "prod.remove",
+        "url": "products/{id}"
+    }
+]

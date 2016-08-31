@@ -15,7 +15,7 @@
 
     <div class="row">
         <div class="filter">
-            <select class="form-control" [(ngModel)]="filterOrgId">
+            <select class="form-control" [(ngModel)]="filterOrgId" (ngModelChange)="accChange($event)">
                 <option *ngFor="let organization of organizations" value="{{organization.id}}">{{organization.name}}</option>
             </select>
         </div>
@@ -45,17 +45,17 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let account of (accounts | acountDispPipe:filterOrgId)">
+                    <tr *ngFor="let account of accounts">
                     <!--<tr *ngFor="let account of (accounts)">-->
                         <td>{{account.name}}</td>
-                        <td>{{account.email}}</td>
-                        <td>{{account.token}}</td>
-                        <td>{{account.role}}</td>
+                        <td>{{account.mail}}</td>
+                        <td>{{account.accessToken}}</td>
+                        <td>{{account.roleName}}</td>
                         <td style="width: 120px;">
                             <button type="button" class="btn btn-success" data-toggle="tooltip" title="Modify Informations" data-toggle="modal" data-target="#modal_dlg" (click)="modifyAccount(account, $event);">
                                 <span class="glyphicon glyphicon-pencil"></span>
                             </button>
-                            <button type="button" class="btn btn-danger" data-toggle="tooltip" title="Remove Account" (click)="removeAccount(account, $event);">
+                            <button type="button" class="btn btn-danger" data-toggle="tooltip" title="Remove Account" data-toggle="modal" data-target="#del_dlg" (click)="confirmRemoveAccount(account, $event);">
                                 <span class="glyphicon glyphicon-trash"></span>
                             </button>
                         </td>
@@ -67,7 +67,28 @@
         
     </div>
 
-    <!-- Modal -->
+    <!-- Modal Delete Confirm-->
+    <div class="modal fade" id="del_dlg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">
+                        Remove Account
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div>Are you sure you want to delete the account bellow?</div>
+                    <p>{{currAccount.name}}</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="removeAccount(currAccount);">Remove</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Add/Modify-->
     <div class="modal fade" id="modal_dlg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -88,21 +109,23 @@
                 <label for="recipient-name" class="control-label">Name:</label>
                 <input type="text" class="form-control" [(ngModel)]="currAccount.name">
             </div>
-            <div class="form-group">
+            <!--<div class="form-group">
                 <label for="recipient-name" class="control-label">Organization Id:</label>
                 <input type="text" class="form-control" [(ngModel)]="currAccount.orgId">
-            </div>
+            </div>-->
             <div class="form-group">
                 <label for="message-text" class="control-label">E-Mail:</label>
-                <input class="form-control"  [(ngModel)]="currAccount.email">
+                <input class="form-control"  [(ngModel)]="currAccount.mail">
             </div>
             <div class="form-group">
                 <label for="message-text" class="control-label">Access Token:</label>
-                <input class="form-control"  [(ngModel)]="currAccount.token">
+                <input class="form-control"  [(ngModel)]="currAccount.accessToken">
             </div>
             <div class="form-group">
                 <label for="message-text" class="control-label">Role:</label>
-                <input class="form-control"  [(ngModel)]="currAccount.role">
+                <select class="form-control" [(ngModel)]="currAccount.roleId" (ngModelChange)="roleChange($event)">
+                    <option *ngFor="let role of roles" value="{{role.id}}">{{role.name}}</option>
+                </select>
             </div>
             </form>
         </div>

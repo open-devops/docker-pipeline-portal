@@ -1,0 +1,27 @@
+[
+  {
+    "id": "org-001",
+    "content": "Faile to get organizations data.",
+    "type": "error"
+  },
+  {
+    "id": "org-002",
+    "content": "Faile to create organization data.",
+    "type": "error"
+  },
+  {
+    "id": "org-003",
+    "content": "Faile to update organization data.",
+    "type": "error"
+  },
+  {
+    "id": "org-004",
+    "content": "Faile to save organization data.",
+    "type": "error"
+  },
+  {
+    "id": "org-005",
+    "content": "Faile to delete organization data.",
+    "type": "error"
+  }
+]

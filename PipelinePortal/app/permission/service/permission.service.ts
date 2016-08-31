@@ -1,68 +1,118 @@
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
-import { Permission } from '../data/permission';
+import { Permission } from '../model/permission';
+import { RestApiCfg } from '../../common/service/restapicfg.service';
+import { RestApi } from '../../common/service/restapi.service';
 
 import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class PermissionService {
-    constructor(private http: Http) { }
+    constructor(
+        private http: Http,
+        private restApiCfg: RestApiCfg,
+        private restApi: RestApi
+    ) { }
 
-    getPermissions(): Promise<Permission[]> {
-        return this.http.get('app/permission/service/mockdata.json')
-                        .toPromise()
-                        .then(this.extractData)
-                        .catch(this.handleError);
+    init(): Promise<any> {
+        return this.restApiCfg.loadCfgData();
     }
 
-    savePermission(permissions: Permission[], org: Permission): Promise<Permission[]> {
-        let targetOrg: Permission;
+    getPermissions(plId: string): Promise<Permission[]> {
+        let url = this.restApiCfg.getRestApiUrl('permission.getByPlById');
+        let pathParams = [
+            {
+                key: 'pipelineId',
+                value: plId
+            }
+        ];
+
+        return this.restApi.get(url, pathParams, undefined, undefined);
+    }
+
+    savePermission(permissions: Permission[], permission: Permission): Promise<Permission[]> {
+        // let targetOrg: Permission;
         
-        permissions.forEach(function (element:any) {
-            if (element.id == org.id) {
-                targetOrg = element;
+        // permissions.forEach(function (element:any) {
+        //     if (element.id == org.id) {
+        //         targetOrg = element;
+        //     }
+        // });
+
+        // if (!targetOrg) {
+        //     targetOrg = new Permission();
+        //     targetOrg.id = 'DDC_Permissiion_' + permissions.length;
+        //     permissions.push(targetOrg);
+        // } 
+
+        // targetOrg.id = org.id;
+        // targetOrg.orgName = org.orgName
+        // targetOrg.prodName = org.prodName;
+        // targetOrg.plName = org.plName;
+        // targetOrg.permission = org.permission;
+
+        if (!permission.id) {
+            // Add
+            let url = this.restApiCfg.getRestApiUrl('permission.add');
+            return this.restApi.post(url, undefined, undefined, permission)
+                               .then(ret => {
+                                   return this.saveData(ret, permissions)
+                                });
+        } else {
+            // Update
+            let url = this.restApiCfg.getRestApiUrl('permission.put');
+            return this.restApi.put(url, undefined, undefined, permission)
+                               .then(ret => {
+                                   return this.saveData(ret, permissions)
+                                });
+        }
+
+    }
+    
+    removePermission(permissions: Permission[], permission: Permission): Promise<Permission[]> {
+
+        let url = this.restApiCfg.getRestApiUrl('permission.remove');
+        let pathParams = [
+            {
+                key: 'id',
+                value: permission.id
+            }
+        ];
+
+        return this.restApi.delete(url, pathParams, undefined, undefined)
+                           .then(ret => {
+                               if (ret == undefined) {
+                                    return undefined;
+                                }
+                               return this.remoteData(permission.id, permissions)
+                            });
+    }
+    
+    private saveData(permission: any, permissions: Permission[]) {
+        if (!permission) {
+            return undefined;
+        }
+        let isExits: boolean = false;
+        
+        permissions.forEach(function (element:any, index: number) {
+            if (element.id == permission.id) {
+                isExits = true;
+                permissions[index] = permission;
             }
         });
 
-        if (!targetOrg) {
-            targetOrg = new Permission();
-            targetOrg.id = 'DDC_Permissiion_' + permissions.length;
-            permissions.push(targetOrg);
-        } 
+        if (!isExits) {
+            permissions.push(permission);
+        }
 
-        targetOrg.id = org.id;
-        targetOrg.orgName = org.orgName
-        targetOrg.prodName = org.prodName;
-        targetOrg.plName = org.plName;
-        targetOrg.permission = org.permission;
-
-        return new Promise<Permission[]>(resole => resole(permissions));
-
+        return permissions;
     }
-    
-    removePermission(permissions: Permission[], org: Permission): Promise<Permission[]> {
-        
+
+    private remoteData(id: string, permissions: Permission[]) {
         permissions = permissions.filter(function (element:any) {
-            return element.id != org.id;
+            return element.id != id;
         });
 
-        return new Promise<Permission[]>(resole => resole(permissions));
-    }
-
-    private extractData(res: Response) {
-      let body = res.json();
-      body = body || [];
-
-      if (body) {
-        //   body.forEach(function (element: any) {
-        //   });
-      }
-
-      return body;
-    }
-    
-    private handleError(error: any) {
-        console.error('An error occurred', error);
-        return Promise.reject(error.message || error);
+        return permissions;
     }
 }

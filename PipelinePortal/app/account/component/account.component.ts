@@ -1,10 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { ROUTER_DIRECTIVES} from '@angular/router';
-import { HTTP_PROVIDERS } from '@angular/http';
-import { Account } from '../data/account';
+import { HTTP_PROVIDERS, ConnectionBackend, Jsonp } from '@angular/http';
+import { Organization } from '../../organization/model/organization';
+import { OrganizationService } from '../../organization/service/organization.service';
+import { Role } from '../../role/model/role';
+import { RoleService } from '../../role/service/role.service';
+import { Account } from '../model/account';
 import { AccountService } from '../service/account.service';
 import { ObjectService } from '../../common/service/object.service';
 import { AcountDispPipe } from '../pipe/account.pipe';
+import { RestApiCfg } from '../../common/service/restapicfg.service';
+import { RestApi } from '../../common/service/restapi.service';
+import { MessageService } from '../../common/service/message.service';
+import { ToastsManager} from 'ng2-toastr/ng2-toastr';
 
 @Component({
     moduleId: module.id,
@@ -13,9 +21,17 @@ import { AcountDispPipe } from '../pipe/account.pipe';
     styleUrls: ['../style/account.component.css', '../../share/css/global.css'],
     directives: [ROUTER_DIRECTIVES],
     providers: [
+        OrganizationService,
+        RoleService,
         AccountService,
         ObjectService,
-        HTTP_PROVIDERS
+        RestApiCfg,
+        RestApi,
+        MessageService,
+        ToastsManager,
+        HTTP_PROVIDERS,
+        ConnectionBackend,
+        Jsonp
     ],
     pipes: [AcountDispPipe]
 })
@@ -23,35 +39,104 @@ import { AcountDispPipe } from '../pipe/account.pipe';
 export class AccountComponent implements OnInit {
     accounts: Account[];
     currAccount: Account;
-    organizations: any[];
+    organizations: Organization[];
+    roles: Role[];
     filterOrgId: string;
     error: any;
 
     constructor(
+        private organizationService: OrganizationService,
+        private roleService: RoleService,
         private accountService: AccountService,
-        private objectService: ObjectService) { }
+        private objectService: ObjectService,
+        private msgService: MessageService
+    ) { }
 
     ngOnInit() {
-        this.organizations = [
-            {'id': 'DDC_01', 'name': 'DDC_01'},
-            {'id': 'DDC_02', 'name': 'DDC_02'},
-            {'id': 'DDC_03', 'name': 'DDC_03'},
-            {'id': 'DDC_04', 'name': 'DDC_04'}
-        ];
-        this.filterOrgId = "DDC_01";
         this.currAccount = new Account();
-        this.getAccounts();
+        this.filterOrgId = "";
+        this.msgService.loadCfgData('app/account/config/message.json');
+        this.organizationService.init()
+                                 .then(res => 
+                                 {
+                                     this.getOrganizations();
+                                 });
+        this.roleService.init();
+        this.accountService.init();
     }
 
-    getAccounts() {
+    getOrganizations() {
+        this.organizationService
+            .getOrganizations()
+            .then(organizations => {
+                if (!organizations) {
+                    this.msgService.error('acc-001');
+                    this.organizations = new Array<Organization>();
+                } else {
+                    this.organizations = organizations;
+                    if (this.organizations.length > 0) {
+                        this.filterOrgId = this.organizations[0].id;
+                        this.accChange(null);
+                    }
+                }
+                
+            })
+            .catch(error => {
+                this.error = error;
+                this.msgService.error('acc-001');
+            });
+    }
+
+    accChange($event: any) {
+        this.accounts = [];
+        this.getRoles(this.filterOrgId);
+        this.getAccounts(this.filterOrgId);
+    }
+
+    roleChange($event: any) {
+        // this.currAccount.roleId = this.filterOrgId;
+    }
+    
+    getRoles(id: string) {
+        this.roleService
+            .getRoles(id)
+            .then(roles => {
+                if (!roles) {
+                    this.msgService.error('acc-002');
+                    this.roles = new Array<Role>();
+                } else {
+                    this.roles = roles;
+                }
+                
+            })
+            .catch(error => {
+                this.error = error;
+                this.msgService.error('acc-002');
+            });
+    }
+
+    getAccounts(id: string) {
         this.accountService
-            .getAccounts()
-            .then(accounts => this.accounts = accounts)
-            .catch(error => this.error = error);
+            .getAccounts(id)
+            .then(accounts => {
+                if (!accounts) {
+                    this.msgService.error('acc-003');
+                    this.accounts = new Array<Account>();
+                } else {
+                    this.accounts = accounts;
+                }
+                
+            })
+            .catch(error => {
+                this.error = error;
+                this.msgService.error('acc-003');
+            });
     }
 
     newAccount() {
         this.currAccount = new Account();
+        this.currAccount.organizationId = this.filterOrgId;
+        this.currAccount.accessToken = '123456';
         this.switchModalAccount(true);
     }
 
@@ -63,12 +148,25 @@ export class AccountComponent implements OnInit {
     saveAccount(account: Account) {
         this.accountService
             .saveAccount(this.accounts, account)
-            .then(accounts => this.refreshData(this, accounts))
-            .catch(error => this.error = error);
+            .then(accounts => {
+                if (!accounts) {
+                    this.msgService.error('acc-004');
+                } else {
+                    this.refreshData(this, accounts)
+                }
+            })
+            .catch(error => {
+                this.error = error;
+                this.msgService.error('acc-004');
+            });
     }
 
-    removeAccount(account: Account, event: any) {
-        event.stopPropagation();
+    confirmRemoveAccount(account: Account) {
+        this.currAccount = account;
+        this.switchModalAccount(true);
+    }
+
+    removeAccount(account: Account) {
         this.accountService
             .removeAccount(this.accounts, account)
             .then(accounts => this.refreshData(this, accounts))

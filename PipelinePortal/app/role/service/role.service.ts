@@ -1,66 +1,116 @@
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
-import { Role } from '../data/role';
+import { Role } from '../model/role';
+import { RestApiCfg } from '../../common/service/restapicfg.service';
+import { RestApi } from '../../common/service/restapi.service';
 
 import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class RoleService {
-    constructor(private http: Http) { }
+    constructor(
+        private http: Http,
+        private restApiCfg: RestApiCfg,
+        private restApi: RestApi
+    ) { }
 
-    getRoles(): Promise<Role[]> {
-        return this.http.get('app/role/service/mockdata.json')
-                        .toPromise()
-                        .then(this.extractData)
-                        .catch(this.handleError);
+    init(): Promise<any> {
+        return this.restApiCfg.loadCfgData();
     }
 
-    saveRole(roles: Role[], org: Role): Promise<Role[]> {
-        let targetOrg: Role;
+    getRoles(orgId: string): Promise<Role[]> {
+        let url = this.restApiCfg.getRestApiUrl('role.getAllByOrgId');
+        let pathParams = [
+            {
+                key: 'organizationId',
+                value: orgId
+            }
+        ];
+
+        return this.restApi.get(url, pathParams, undefined, undefined);
+    }
+
+    saveRole(roles: Role[], role: Role): Promise<Role[]> {
+        // let target: Role;
+        // let newFlg: boolean;
         
-        roles.forEach(function (element:any) {
-            if (element.id == org.id) {
-                targetOrg = element;
+        // roles.forEach(function (element:any) {
+        //     if (element.id == role.id) {
+        //         // target = element;
+        //         newFlg = false;
+        //     }
+        // });
+
+        // if (!target) {
+        //     newFlg = true;
+        //     target = new Role();
+        // } 
+
+        // target.name = role.name;
+        // target.organizationId = role.organizationId;
+        // target.description = role.description;
+
+        if (!role.id) {
+            // Add
+            let url = this.restApiCfg.getRestApiUrl('role.add');
+            return this.restApi.post(url, undefined, undefined, role)
+                               .then(ret => {
+                                   return this.saveData(ret, roles)
+                                });
+        } else {
+            // Update
+            let url = this.restApiCfg.getRestApiUrl('role.put');
+            return this.restApi.put(url, undefined, undefined, role)
+                               .then(ret => {
+                                   return this.saveData(ret, roles)
+                                });
+        }
+    }
+    
+    removeRole(roles: Role[], role: Role): Promise<Role[]> {
+        
+        let url = this.restApiCfg.getRestApiUrl('role.remove');
+        let pathParams = [
+            {
+                key: 'id',
+                value: role.id
+            }
+        ];
+
+        return this.restApi.delete(url, pathParams, undefined, undefined)
+                           .then(ret => {
+                               if (ret == undefined) {
+                                    return undefined;
+                                }
+                               return this.remoteData(role.id, roles)
+                            });
+    }
+    
+    private saveData(role: any, roles: Role[]) {
+        if (!role) {
+            return undefined;
+        }
+        let isExits: boolean = false;
+        
+        roles.forEach(function (element:any, index: number) {
+            if (element.id == role.id) {
+                isExits = true;
+                roles[index] = role;
             }
         });
 
-        if (!targetOrg) {
-            targetOrg = new Role();
-            targetOrg.id = 'DDC_' + roles.length;
-            roles.push(targetOrg);
-        } 
+        if (!isExits) {
+            roles.push(role);
+        }
 
-        targetOrg.name = org.name;
-        targetOrg.orgId = org.orgId;
-        targetOrg.description = org.description;
-
-        return new Promise<Role[]>(resole => resole(roles));
-
+        return roles;
     }
-    
-    removeRole(roles: Role[], org: Role): Promise<Role[]> {
-        
+
+    private remoteData(id: string, roles: Role[]) {
         roles = roles.filter(function (element:any) {
-            return element.id != org.id;
+            return element.id != id;
         });
 
-        return new Promise<Role[]>(resole => resole(roles));
-    }
-
-    private extractData(res: Response) {
-      let body = res.json();
-      body = body || [];
-
-      if (body) {
-        //   body.forEach(function (element: any) {
-        //   });
-      }
-
-      return body;
-    }
-    
-    private handleError(error: any) {
-        console.error('An error occurred', error);
-        return Promise.reject(error.message || error);
+        return roles;
     }
 }

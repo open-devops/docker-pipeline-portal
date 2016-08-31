@@ -1,68 +1,118 @@
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
-import { Product } from '../data/product';
+import { Product } from '../model/product';
+import { RestApiCfg } from '../../common/service/restapicfg.service';
+import { RestApi } from '../../common/service/restapi.service';
 
 import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class ProductService {
-    constructor(private http: Http) { }
+    constructor(
+        private http: Http,
+        private restApiCfg: RestApiCfg,
+        private restApi: RestApi
+    ) { }
 
-    getProducts(): Promise<Product[]> {
-        return this.http.get('app/product/service/mockdata.json')
-                        .toPromise()
-                        .then(this.extractData)
-                        .catch(this.handleError);
+    init(): Promise<any> {
+        return this.restApiCfg.loadCfgData();
     }
 
-    saveProduct(products: Product[], org: Product): Promise<Product[]> {
-        let targetOrg: Product;
+    getProducts(orgId: string): Promise<any[]> {
+        let url = this.restApiCfg.getRestApiUrl('prod.getAllByOrgId');
+        let pathParams = [
+            {
+                key: 'organizationId',
+                value: orgId
+            }
+        ];
+
+        return this.restApi.get(url, pathParams, undefined, undefined);
+    }
+
+    saveProduct(products: Product[], prod: Product): Promise<Product[]> {
+        // let targetOrg: Product;
         
-        products.forEach(function (element:any) {
-            if (element.id == org.id) {
-                targetOrg = element;
+        // products.forEach(function (element:any) {
+        //     if (element.id == org.id) {
+        //         targetOrg = element;
+        //     }
+        // });
+
+        // if (!targetOrg) {
+        //     targetOrg = new Product();
+        //     targetOrg.id = 'DDC_' + products.length;
+        //     products.push(targetOrg);
+        // } 
+
+        // targetOrg.name = org.name;
+        // targetOrg.orgId = org.orgId;
+        // targetOrg.description = org.description;
+        // targetOrg.plName = org.plName;
+        // targetOrg.plDescription = org.plDescription;
+
+        if (!prod.id) {
+            // Add
+            let url = this.restApiCfg.getRestApiUrl('prod.add');
+            return this.restApi.post(url, undefined, undefined, prod)
+                               .then(ret => {
+                                   return this.saveData(ret, products)
+                                });
+        } else {
+            // Update
+            let url = this.restApiCfg.getRestApiUrl('prod.put');
+            return this.restApi.put(url, undefined, undefined, prod)
+                               .then(ret => {
+                                   return this.saveData(ret, products)
+                                });
+        }
+
+    }
+    
+    removeProduct(products: Product[], prod: Product): Promise<Product[]> {
+        
+        let url = this.restApiCfg.getRestApiUrl('prod.remove');
+        let pathParams = [
+            {
+                key: 'id',
+                value: prod.id
+            }
+        ];
+
+        return this.restApi.delete(url, pathParams, undefined, undefined)
+                           .then(ret => {
+                               if (ret == undefined) {
+                                    return undefined;
+                                }
+                               return this.remoteData(prod.id, products)
+                            });
+    }
+    
+    private saveData(prod: any, products: Product[]) {
+        if (!prod) {
+            return undefined;
+        }
+        let isExits: boolean = false;
+        
+        products.forEach(function (element:any, index: number) {
+            if (element.id == prod.id) {
+                isExits = true;
+                products[index] = prod;
             }
         });
 
-        if (!targetOrg) {
-            targetOrg = new Product();
-            targetOrg.id = 'DDC_' + products.length;
-            products.push(targetOrg);
-        } 
+        if (!isExits) {
+            products.push(prod);
+        }
 
-        targetOrg.name = org.name;
-        targetOrg.orgId = org.orgId;
-        targetOrg.description = org.description;
-        targetOrg.plName = org.plName;
-        targetOrg.plDescription = org.plDescription;
-
-        return new Promise<Product[]>(resole => resole(products));
-
+        return products;
     }
-    
-    removeProduct(products: Product[], org: Product): Promise<Product[]> {
-        
+
+    private remoteData(id: string, products: Product[]) {
         products = products.filter(function (element:any) {
-            return element.id != org.id;
+            return element.id != id;
         });
 
-        return new Promise<Product[]>(resole => resole(products));
-    }
-
-    private extractData(res: Response) {
-      let body = res.json();
-      body = body || [];
-
-      if (body) {
-        //   body.forEach(function (element: any) {
-        //   });
-      }
-
-      return body;
-    }
-    
-    private handleError(error: any) {
-        console.error('An error occurred', error);
-        return Promise.reject(error.message || error);
+        return products;
     }
 }

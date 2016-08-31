@@ -1,0 +1,131 @@
+[
+
+    {
+        "id": "organization.getAll",
+        "url": "organizations"
+    },
+    {
+        "id": "organization.add",
+        "url": "organizations"
+    },
+    {
+        "id": "organization.put",
+        "url": "organizations"
+    },
+    {
+        "id": "organization.remove",
+        "url": "organizations/{id}"
+    },
+
+
+
+
+    {
+        "id": "account.getAll",
+        "url": "accounts"
+    },
+    {
+        "id": "account.getById",
+        "url": "accounts/{id}"
+    },
+    {
+        "id": "account.getAllByOrgId",
+        "url": "accounts/organization/{organizationId}"
+    },
+    {
+        "id": "account.add",
+        "url": "accounts"
+    },
+    {
+        "id": "account.put",
+        "url": "accounts"
+    },
+    {
+        "id": "account.remove",
+        "url": "accounts/{id}"
+    },
+
+
+
+
+    {
+        "id": "role.getById",
+        "url": "roles/{id}"
+    },
+    {
+        "id": "role.getAllByOrgId",
+        "url": "roles/organization/{organizationId}"
+    },
+    {
+        "id": "role.add",
+        "url": "roles"
+    },
+    {
+        "id": "role.put",
+        "url": "roles"
+    },
+    {
+        "id": "role.remove",
+        "url": "roles/{id}"
+    },
+
+
+
+
+    {
+        "id": "prod.getAll",
+        "url": "products"
+    },
+    {
+        "id": "prod.getById",
+        "url": "products/{id}"
+    },
+    {
+        "id": "prod.getAllByOrgId",
+        "url": "products/organization/{organizationId}"
+    },
+    {
+        "id": "prod.getAllByOrgIdAndName",
+        "url": "products/organization/product"
+    },
+    {
+        "id": "prod.getByPlId",
+        "url": "products/organization/product/pipeline/{pipelineId}"
+    },
+    {
+        "id": "prod.add",
+        "url": "products"
+    },
+    {
+        "id": "prod.put",
+        "url": "products"
+    },
+    {
+        "id": "prod.remove",
+        "url": "products/{id}"
+    },
+
+
+
+
+    {
+        "id": "permission.getByPlById",
+        "url": "permissions/pipeline/{pipelineId}"
+    },
+    {
+        "id": "permission.getById",
+        "url": "permissions/{id}"
+    },
+    {
+        "id": "permission.add",
+        "url": "permissions"
+    },
+    {
+        "id": "permission.put",
+        "url": "permissions"
+    },
+    {
+        "id": "permission.remove",
+        "url": "permissions/{id}"
+    }
+]

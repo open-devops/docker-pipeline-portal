@@ -1,0 +1,22 @@
+[
+    {
+        "id": "permission.getByPlById",
+        "url": "permissions/pipeline/{pipelineId}"
+    },
+    {
+        "id": "permission.getById",
+        "url": "permissions/{id}"
+    },
+    {
+        "id": "permission.add",
+        "url": "permissions"
+    },
+    {
+        "id": "permission.put",
+        "url": "permissions"
+    },
+    {
+        "id": "permission.remove",
+        "url": "permissions/{id}"
+    }
+]

@@ -1,0 +1,26 @@
+[
+    {
+        "id": "account.getAll",
+        "url": "accounts"
+    },
+    {
+        "id": "account.getById",
+        "url": "accounts/{id}"
+    },
+    {
+        "id": "account.getAllByOrgId",
+        "url": "accounts/organization/{organizationId}"
+    },
+    {
+        "id": "account.add",
+        "url": "accounts"
+    },
+    {
+        "id": "account.put",
+        "url": "accounts"
+    },
+    {
+        "id": "account.remove",
+        "url": "accounts/{id}"
+    }
+]

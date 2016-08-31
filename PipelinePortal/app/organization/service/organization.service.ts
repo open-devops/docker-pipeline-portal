@@ -1,65 +1,107 @@
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
-import { Organization } from '../data/organization';
+import { Organization } from '../model/organization';
+import { RestApiCfg } from '../../common/service/restapicfg.service';
+import { RestApi } from '../../common/service/restapi.service';
 
 import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class OrganizationService {
-    constructor(private http: Http) { }
+    constructor(
+        private http: Http,
+        private restApiCfg: RestApiCfg,
+        private restApi: RestApi
+    ) { }
+
+    init(): Promise<any> {
+        return this.restApiCfg.loadCfgData();
+    }
 
     getOrganizations(): Promise<Organization[]> {
-        return this.http.get('app/organization/service/mockdata.json')
-                        .toPromise()
-                        .then(this.extractData)
-                        .catch(this.handleError);
+        let url = this.restApiCfg.getRestApiUrl('organization.getAll');
+        return this.restApi.get(url, undefined, undefined, undefined);
     }
 
     saveOrganization(organizations: Organization[], org: Organization): Promise<Organization[]> {
-        let targetOrg: Organization;
+        // let target: Organization;
+        // let newFlg: boolean;
         
-        organizations.forEach(function (element:any) {
-            if (element.id == org.id) {
-                targetOrg = element;
-            }
-        });
+        // organizations.forEach(function (element:any) {
+        //     if (element.id == org.id) {
+        //         target = element;
+        //     }
+        // });
 
-        if (!targetOrg) {
-            targetOrg = new Organization();
-            targetOrg.id = 'DDC_' + organizations.length;
-            organizations.push(targetOrg);
-        } 
+        // if (!target) {
+        //     newFlg = true;
+        //     target = new Organization();
+        // } 
 
-        targetOrg.name = org.name;
-        targetOrg.description = org.description;
+        // target.name = org.name;
+        // target.description = org.description;
 
-        return new Promise<Organization[]>(resole => resole(organizations));
-
+        if (!org.id) {
+            // Add
+            let url = this.restApiCfg.getRestApiUrl('organization.add');
+            return this.restApi.post(url, undefined, undefined, org)
+                               .then(ret => {
+                                   return this.saveData(ret, organizations)
+                                });
+        } else {
+            // Update
+            let url = this.restApiCfg.getRestApiUrl('organization.put');
+            return this.restApi.put(url, undefined, undefined, org)
+                               .then(ret => {
+                                   return this.saveData(ret, organizations)
+                                });
+        }
     }
     
     removeOrganization(organizations: Organization[], org: Organization): Promise<Organization[]> {
         
-        organizations = organizations.filter(function (element:any) {
-            return element.id != org.id;
-        });
+        let url = this.restApiCfg.getRestApiUrl('organization.remove');
+        let pathParams = [
+            {
+                key: 'id',
+                value: org.id
+            }
+        ];
 
-        return new Promise<Organization[]>(resole => resole(organizations));
-    }
-
-    private extractData(res: Response) {
-      let body = res.json();
-      body = body || [];
-
-      if (body) {
-        //   body.forEach(function (element: any) {
-        //   });
-      }
-
-      return body;
+        return this.restApi.delete(url, pathParams, undefined, undefined)
+                           .then(ret => {
+                               if (ret == undefined) {
+                                    return undefined;
+                                }
+                               return this.remoteData(org.id, organizations)
+                            });
     }
     
-    private handleError(error: any) {
-        console.error('An error occurred', error);
-        return Promise.reject(error.message || error);
+    private saveData(org: any, organizations: Organization[]) {
+        if (!org) {
+            return undefined;
+        }
+        let isExits: boolean = false;
+        
+        organizations.forEach(function (element:any, index: number) {
+            if (element.id == org.id) {
+                isExits = true;
+                organizations[index] = org;
+            }
+        });
+
+        if (!isExits) {
+            organizations.push(org);
+        }
+
+        return organizations;
+    }
+
+    private remoteData(id: string, organizations: Organization[]) {
+        organizations = organizations.filter(function (element:any) {
+            return element.id != id;
+        });
+
+        return organizations;
     }
 }
