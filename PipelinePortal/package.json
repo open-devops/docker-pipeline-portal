@@ -1,5 +1,5 @@
 {
-  "name": "angular2-quickstart",
+  "name": "DevOps-Pipeline-Portal",
   "version": "1.0.0",
   "description": "QuickStart package.json from the documentation, supplemented with testing support",
   "scripts": {
@@ -31,6 +31,20 @@
     "@angular/router":  "3.0.0-beta.2",
     "@angular/router-deprecated":  "2.0.0-rc.2",
     "@angular/upgrade":  "2.0.0-rc.4",
+
+    "bootstrap": "^3.3.6",
+    "bootstrap-datepicker": "^1.6.1",
+    "bootstrap-timepicker": "^0.5.2",
+    "bootstrap-touchspin": "^3.1.1",
+    "es6-shim": "^0.35.1",
+    "font-awesome": "^4.6.1",
+    "jquery": "^2.2.3",
+    "ng2-bootstrap": "^1.0.16",
+    "ng2-idle": "^1.0.0-alpha.11",
+    "ng2-modal": "0.0.3",
+    "ng2-table": "^1.0.2",
+    "ng2-toastr": "^0.2.0",
+    "ng2-translate": "2.1.0",
 
     "systemjs": "0.19.27",
     "core-js": "^2.4.0",
