@@ -17,7 +17,7 @@ import { SiteService } from '../service/site.service';
 })
 
 export class SiteComponent implements OnInit {
-    title = 'HPE DevOps+';
+    title = 'Open DevOps+';
     siteMenus: SiteMenu[];
     selectedMenu: SiteMenu;
 
