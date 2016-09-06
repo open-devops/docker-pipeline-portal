@@ -19,5 +19,5 @@ RUN chown -R nodejs:nodejs /PipelinePortal
 USER nodejs
 
 CMD cat app/data/capabilities.json.template |sed s/PORTAL_LOCALHOST/${PORTAL_LOCALHOST}/g >app/data/capabilities.json && \
-    cat app/common/systemconfig.ts.template |sed s/PORTAL_LOCALHOST/${PORTAL_LOCALHOST}/g >app/common/systemconfig.ts && \
+    cat app/common/config/systemconfig.ts.template |sed s/PORTAL_LOCALHOST/${PORTAL_LOCALHOST}/g >app/common/config/systemconfig.ts && \
     npm start
