@@ -2,13 +2,13 @@ import { Injectable } from '@angular/core';
 import { Http, HTTP_PROVIDERS } from '@angular/http';
 
 import { RestApiModel } from '../model/rest';
+import { SystemConfig } from '../config/systemconfig';
 
 import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class RestApiCfg {
-    protected basePath = 'http://16.187.145.11:8600/api';
-    // protected basePath = 'http://16.187.145.11:8086';
+    protected basePath = SystemConfig.apiBasePath;
     protected restApiList: RestApiModel[];
 
     constructor(private http: Http) {

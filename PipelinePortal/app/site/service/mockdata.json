@@ -5,17 +5,17 @@
         "class": "fa fa-fw fa-building"
     },
     {
-        "name": "Account",
-        "path": "/account",
-        "class": "fa fa-fw fa-users"
-    },
-    {
         "name": "Role",
         "path": "/role",
         "class": "fa fa-fw fa-users"
     },
     {
-        "name": "Product",
+        "name": "Account",
+        "path": "/account",
+        "class": "fa fa-fw fa-users"
+    },
+    {
+        "name": "Product & Pipeline",
         "path": "/product",
         "class": "fa fa-fw fa-tasks"
     },

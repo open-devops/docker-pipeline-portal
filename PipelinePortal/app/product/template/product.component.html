@@ -73,12 +73,13 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title" id="myModalLabel">
-                        Remove Product
+                        Remove Product & Pipeline
                     </h4>
                 </div>
                 <div class="modal-body">
-                    <div>Are you sure you want to delete the product bellow?</div>
-                    <p>{{currProduct.name}}</p>
+                    <div>Are you sure you want to delete the product & pipeline bellow?</div>
+                    <br>
+                    <strong><p>{{currProduct.name}} - {{currProduct.pipelineName}}</p></strong>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
@@ -96,10 +97,10 @@
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <h4 class="modal-title" id="myModalLabel">
                 <div *ngIf="currProduct.id == ''">
-                    New Product
+                    New Product & Pipeline
                 </div>
                 <div *ngIf="currProduct.id != ''">
-                    Modify Product
+                    Modify Product & Pipeline
                 </div>
             </h4>
         </div>

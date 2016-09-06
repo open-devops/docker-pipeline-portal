@@ -3,31 +3,31 @@
         "id": "JIRA",
         "name": "Jira",
         "description": "Requirement Management",
-        "url": "http://PORTAL_LOCALHOST:9091"
+        "url": "http://16.187.145.11:9091"
     },
     {
         "id": "JENKINS",
         "name": "Jenkins",
         "description": "Continuous Integration",
-        "url": "http://PORTAL_LOCALHOST:9080"
+        "url": "http://16.187.145.11:9080"
     },
     {
         "id": "GITLAB",
         "name": "Gitlab",
         "description": "Configuration Management",
-        "url": "http://PORTAL_LOCALHOST:9010"
+        "url": "http://16.187.145.11:9010"
     },
     {
         "id": "ARTIFACTORY",
         "name": "Artifactory",
         "description": "Repository Management",
-        "url": "http://PORTAL_LOCALHOST:9011"
+        "url": "http://16.187.145.11:9011"
     },
     {
         "id": "SONAQUBE",
         "name": "Sonarqube",
         "description": "Continuous Quality Inspection",
-        "url": "http://PORTAL_LOCALHOST:9000"
+        "url": "http://16.187.145.11:9000"
     },
     {
         "id": "ROBOT",
@@ -57,6 +57,6 @@
         "id": "HYGIEIA",
         "name": "Hygieia",
         "description": "Pipeline Dashboard",
-        "url": "http://PORTAL_LOCALHOST:9088"
+        "url": "http://16.187.145.11:9088"
     }
 ]
