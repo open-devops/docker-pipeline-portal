@@ -2,19 +2,19 @@
 
     {
         "id": "organization.getAll",
-        "url": "organizations"
+        "url": "api/organizations"
     },
     {
         "id": "organization.add",
-        "url": "organizations"
+        "url": "api/organizations"
     },
     {
         "id": "organization.put",
-        "url": "organizations"
+        "url": "api/organizations"
     },
     {
         "id": "organization.remove",
-        "url": "organizations/{id}"
+        "url": "api/organizations/{id}"
     },
 
 
@@ -22,27 +22,27 @@
 
     {
         "id": "account.getAll",
-        "url": "accounts"
+        "url": "api/accounts"
     },
     {
         "id": "account.getById",
-        "url": "accounts/{id}"
+        "url": "api/accounts/{id}"
     },
     {
         "id": "account.getAllByOrgId",
-        "url": "accounts/organization/{organizationId}"
+        "url": "api/accounts/organization/{organizationId}"
     },
     {
         "id": "account.add",
-        "url": "accounts"
+        "url": "api/accounts"
     },
     {
         "id": "account.put",
-        "url": "accounts"
+        "url": "api/accounts"
     },
     {
         "id": "account.remove",
-        "url": "accounts/{id}"
+        "url": "api/accounts/{id}"
     },
 
 
@@ -50,23 +50,23 @@
 
     {
         "id": "role.getById",
-        "url": "roles/{id}"
+        "url": "api/roles/{id}"
     },
     {
         "id": "role.getAllByOrgId",
-        "url": "roles/organization/{organizationId}"
+        "url": "api/roles/organization/{organizationId}"
     },
     {
         "id": "role.add",
-        "url": "roles"
+        "url": "api/roles"
     },
     {
         "id": "role.put",
-        "url": "roles"
+        "url": "api/roles"
     },
     {
         "id": "role.remove",
-        "url": "roles/{id}"
+        "url": "api/roles/{id}"
     },
 
 
@@ -74,35 +74,35 @@
 
     {
         "id": "prod.getAll",
-        "url": "products"
+        "url": "api/products"
     },
     {
         "id": "prod.getById",
-        "url": "products/{id}"
+        "url": "api/products/{id}"
     },
     {
         "id": "prod.getAllByOrgId",
-        "url": "products/organization/{organizationId}"
+        "url": "api/products/organization/{organizationId}"
     },
     {
         "id": "prod.getAllByOrgIdAndName",
-        "url": "products/organization/product"
+        "url": "api/products/organization/product"
     },
     {
         "id": "prod.getByPlId",
-        "url": "products/organization/product/pipeline/{pipelineId}"
+        "url": "api/products/organization/product/pipeline/{pipelineId}"
     },
     {
         "id": "prod.add",
-        "url": "products"
+        "url": "api/products"
     },
     {
         "id": "prod.put",
-        "url": "products"
+        "url": "api/products"
     },
     {
         "id": "prod.remove",
-        "url": "products/{id}"
+        "url": "api/products/{id}"
     },
 
 
@@ -110,22 +110,66 @@
 
     {
         "id": "permission.getByPlById",
-        "url": "permissions/pipeline/{pipelineId}"
+        "url": "api/permissions/pipeline/{pipelineId}"
     },
     {
         "id": "permission.getById",
-        "url": "permissions/{id}"
+        "url": "api/permissions/{id}"
     },
     {
         "id": "permission.add",
-        "url": "permissions"
+        "url": "api/permissions"
     },
     {
         "id": "permission.put",
-        "url": "permissions"
+        "url": "api/permissions"
     },
     {
         "id": "permission.remove",
-        "url": "permissions/{id}"
+        "url": "api/permissions/{id}"
+    },
+
+
+
+
+    {
+        "id": "pipeline.getByPlId",
+        "url": "v1/pipelines/{pipelineId}/provision"
+    },
+    {
+        "id": "pipeline.save",
+        "url": "v1/pipelines/{pipelineId}/provision"
+    },
+    {
+        "id": "pipeline.remove",
+        "url": "v1/pipelines/{id}"
+    },
+    {
+        "id": "pipeline.getStatus",
+        "url": "v1/pipelines/{pipelineId}/status"
+    },
+    {
+        "id": "pipeline.startOne",
+        "url": "v1/pipelines/{pipelineId}/start/{kind}"
+    },
+    {
+        "id": "pipeline.stopOne",
+        "url": "v1/pipelines/{pipelineId}/stop/{kind}"
+    },
+    {
+        "id": "pipeline.restartOne",
+        "url": "v1/pipelines/{pipelineId}/restart/{kind}"
+    },
+    {
+        "id": "pipeline.startAll",
+        "url": "v1/pipelines/{pipelineId}/start"
+    },
+    {
+        "id": "pipeline.stopAll",
+        "url": "v1/pipelines/{pipelineId}/stop"
+    },
+    {
+        "id": "pipeline.restartAll",
+        "url": "v1/pipelines/{pipelineId}/restart"
     }
 ]

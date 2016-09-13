@@ -1,0 +1,58 @@
+[
+    {
+        "id": "CA_001",
+        "kind": "CA",
+        "name": "Jira",
+        "description": "Requirement Management",
+        "url": "http://16.187.145.11:9091"
+    },
+    {
+        "id": "SCM_001",
+        "kind": "SCM",
+        "name": "Gitlab",
+        "description": "Configuration Management",
+        "url": "http://16.187.145.11:9010"
+    },
+    {
+        "id": "CI_001",
+        "kind": "CI",
+        "name": "Jenkins",
+        "description": "Continuous Integration",
+        "url": "http://16.187.145.11:9080"
+    },
+    {
+        "id": "CQ_001",
+        "kind": "CQ",
+        "name": "Sonarqube",
+        "description": "Continuous Quality Inspection",
+        "url": "http://16.187.145.11:9000"
+    },
+    {
+        "id": "COV_001",
+        "kind": "COV",
+        "name": "Hygieia",
+        "description": "Pipeline Dashboard",
+        "url": "http://16.187.145.11:9088"
+    },
+    {
+        "id": "RPA_001",
+        "kind": "RPA",
+        "name": "Nexus",
+        "description": "Repository Management",
+        "url": "#"
+    },
+    {
+        "id": "RPD_001",
+        "kind": "RPD",
+        "name": "Harbor",
+        "description": "Repository Management",
+        "url": "#"
+    },
+    {
+        "id": "CMP_001",
+        "kind": "CMP",
+        "name": "Rancher",
+        "description": "Container Management",
+        "url": "http://16.187.145.11:8090"
+    }
+]

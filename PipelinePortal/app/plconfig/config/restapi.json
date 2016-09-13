@@ -1,0 +1,42 @@
+[
+    {
+        "id": "pipeline.getByPlId",
+        "url": "pipelines/{pipelineId}/provision"
+    },
+    {
+        "id": "pipeline.add",
+        "url": "pipelines/{pipelineId}/provision"
+    },
+    {
+        "id": "pipeline.remove",
+        "url": "pipelines/{id}"
+    },
+    {
+        "id": "pipeline.getStatus",
+        "url": "/pipelines/{pipelineId}/status"
+    },
+    {
+        "id": "pipeline.startOne",
+        "url": "/pipelines/{pipelineId}/start/{kind}"
+    },
+    {
+        "id": "pipeline.stopOne",
+        "url": "/pipelines/{pipelineId}/stop/{kind}"
+    },
+    {
+        "id": "pipeline.restartOne",
+        "url": "/pipelines/{pipelineId}/restart/{kind}"
+    },
+    {
+        "id": "pipeline.startAll",
+        "url": "/pipelines/{pipelineId}/start"
+    },
+    {
+        "id": "pipeline.stopAll",
+        "url": "/pipelines/{pipelineId}/stop"
+    },
+    {
+        "id": "pipeline.restartAll",
+        "url": "/pipelines/{pipelineId}/restart"
+    }
+]

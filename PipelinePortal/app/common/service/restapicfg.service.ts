@@ -8,7 +8,8 @@ import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class RestApiCfg {
-    protected basePath = SystemConfig.apiBasePath;
+    protected baseIp = SystemConfig.apiBaseIp;
+    protected basePort = SystemConfig.apiBasePort;
     protected restApiList: RestApiModel[];
 
     constructor(private http: Http) {
@@ -25,11 +26,12 @@ export class RestApiCfg {
                          .catch(this.handleError);
     }
     
-    getRestApiUrl(apiId: string) {
+    getRestApiUrl(apiId: string, port?: string): string {
         let url = '';
+        port = port || this.basePort;
         for (let restItem of this.restApiList) {
             if (restItem.id.toLowerCase() === apiId.toLowerCase()) {
-                url = `${this.basePath}/${restItem.url}`;
+                url = `http://${this.baseIp}:${port}/${restItem.url}`;
                 break;
             }
         }

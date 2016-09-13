@@ -25,19 +25,9 @@
         "class": "fa fa-fw fa-key"
     },
     {
-        "name": "Pipeline Configuration",
+        "name": "Pipeline Control",
         "path": "/plconfig",
         "class": "fa fa-fw fa-wrench"
-    },
-    {
-        "name": "Capabilities Configuration",
-        "path": "/cbconfig",
-        "class": "fa fa-fw fa-wrench"
-    },
-    {
-        "name": "Control Pad",
-        "path": "/ctlpad",
-        "class": "fa fa-fw fa-crosshairs"
     },
     {
         "name": "Dashboard",

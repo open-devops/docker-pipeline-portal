@@ -1,41 +1,107 @@
 import { Injectable } from '@angular/core';
 import { Http, Response  } from '@angular/http';
-import { Capability } from '../data/capability';
-import { CapabilityTemplate } from '../data/capability-template';
+import { PipelineProvision, PipelineCapability, PipelineCapabilityConfigItem, PipelineStatus, PLOperation } from '../model/PipelineProvision';
+import { RestApiCfg } from '../../common/service/restapicfg.service';
+import { RestApi } from '../../common/service/restapi.service';
 
 import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class CapabilityService {
+    API_PORT: string = '8700';
+    constructor(
+        private http: Http,
+        private restApiCfg: RestApiCfg,
+        private restApi: RestApi
+    ) { }
 
-    constructor(private http: Http) { }
-
-    getCapabilities(): Promise<Capability[]> {
-        return this.http.get('app/data/capabilities.json')
-                        .toPromise()
-                        .then(this.extractData)
-                        .catch(this.handleError);
+    init(): Promise<any> {
+        return this.restApiCfg.loadCfgData();
     }
 
-    private extractData(res: Response) {
-      let body = res.json();
-      body = body || [];
+    getPipelineProvision(plId: string): Promise<PipelineProvision> {
+        let url = this.restApiCfg.getRestApiUrl('pipeline.getByPlId', this.API_PORT);
+        let pathParams = [
+            {
+                key: 'pipelineId',
+                value: plId
+            }
+        ];
 
-      if (body) {
-          body.forEach(function (element: any) {
-              let template = CapabilityTemplate.find(template => template.id == element.id);
-              element["role"] = template.role;
-              element["img"] = template.img;
-              element["dispGroup"] = template.dispGroup;
-              element["dispIndex"] = template.dispIndex;
-          });
-      }
+        return this.restApi.get(url, pathParams, undefined, undefined);
+    }
 
-      return body;
+
+    savePipelineProvision(provision: PipelineProvision): Promise<any> {
+        let url = this.restApiCfg.getRestApiUrl('pipeline.save', this.API_PORT);
+        let pathParams = [
+            {
+                key: 'pipelineId',
+                value: provision.pipelineId
+            }
+        ];
+        return this.restApi.post(url, pathParams, undefined, provision)
+                            .then(ret => {
+                                return ret;
+                            });
+    }
+
+    getPipelineStatus(plId: string): Promise<PipelineStatus> {
+        let url = this.restApiCfg.getRestApiUrl('pipeline.getStatus', this.API_PORT);
+        let pathParams = [
+            {
+                key: 'pipelineId',
+                value: plId
+            }
+        ];
+
+        return this.restApi.get(url, pathParams, undefined, undefined);
+    }
+
+    plOperation(plId: string, kind: string, opeType: PLOperation): Promise<any> {
+        let apiKey = this.getOpeApiKey(opeType);
+        let url = this.restApiCfg.getRestApiUrl(apiKey, this.API_PORT);
+        let pathParams = [
+            {
+                key: 'pipelineId',
+                value: plId
+            },
+            {
+                key: 'kind',
+                value: kind
+            }
+        ];
+        return this.restApi.post(url, pathParams, undefined, undefined)
+                            .then(ret => {
+                                return ret;
+                            });
     }
     
-    private handleError(error: any) {
-        console.error('An error occurred', error);
-        return Promise.reject(error.message || error);
+    getOpeApiKey(opeType: PLOperation): string {
+        let msgId: string;
+
+        switch (opeType) {
+            case PLOperation.StartOne:
+                msgId = 'pipeline.startOne';
+                break;
+            case PLOperation.StopOne:
+                msgId = 'pipeline.stopOne';
+                break;
+            case PLOperation.RestartOne:
+                msgId = 'pipeline.restartOne';
+                break;
+
+            case PLOperation.StartAll:
+                msgId = 'pipeline.startAll';
+                break;
+            case PLOperation.StopAll:
+                msgId = 'pipeline.stopAll';
+                break;
+            case PLOperation.RestartAll:
+                msgId = 'pipeline.restartAll';
+                break;
+        }
+
+        return msgId;
     }
 }

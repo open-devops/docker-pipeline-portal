@@ -1,0 +1,62 @@
+[
+    {
+        "id": "JIRA",
+        "name": "Jira",
+        "description": "Requirement Management",
+        "url": "http://PORTAL_LOCALHOST:9091"
+    },
+    {
+        "id": "JENKINS",
+        "name": "Jenkins",
+        "description": "Continuous Integration",
+        "url": "http://PORTAL_LOCALHOST:9080"
+    },
+    {
+        "id": "GITLAB",
+        "name": "Gitlab",
+        "description": "Configuration Management",
+        "url": "http://PORTAL_LOCALHOST:9010"
+    },
+    {
+        "id": "ARTIFACTORY",
+        "name": "Artifactory",
+        "description": "Repository Management",
+        "url": "http://PORTAL_LOCALHOST:9011"
+    },
+    {
+        "id": "SONAQUBE",
+        "name": "Sonarqube",
+        "description": "Continuous Quality Inspection",
+        "url": "http://PORTAL_LOCALHOST:9000"
+    },
+    {
+        "id": "ROBOT",
+        "name": "Robot",
+        "description": "UI Test",
+        "url": "#"
+    },
+    {
+        "id": "ROBOT",
+        "name": "Robot",
+        "description": "API Test",
+        "url": "#"
+    },
+    {
+        "id": "MONGODB",
+        "name": "MongoDB",
+        "description": "Pipeline Data Store",
+        "url": "#"
+    },
+    {
+        "id": "MARIADB",
+        "name": "MariaDB",
+        "description": "Pipeline Data Store",
+        "url": "#"
+    },
+    {
+        "id": "HYGIEIA",
+        "name": "Hygieia",
+        "description": "Pipeline Dashboard",
+        "url": "http://PORTAL_LOCALHOST:9088"
+    }
+]

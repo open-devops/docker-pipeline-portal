@@ -3,31 +3,60 @@
     <div class="row">
         <div>
             <h1 class="page-header">
-                Pipeline Configuration
+                Pipeline Control
             </h1>
             <ol class="breadcrumb">
                 <li class="active">
-                    <i class="fa fa-wrench"></i> Pipeline Configuration
+                    <i class="fa fa-wrench"></i> Pipeline Control
                 </li>
             </ol>
         </div>
     </div>
 
+    <!--Filters And Function Suttons-->
     <div class="row">
+        <!--Basic Filters-->
         <div class="filter">
-            <select class="form-control" [(ngModel)]="filterOrgName">
+            <select class="form-control" [(ngModel)]="filterOrgId" (ngModelChange)="orgChange($event)">
                 <option *ngFor="let organization of organizations" value="{{organization.id}}">{{organization.name}}</option>
             </select>
         </div>
         <div class="filter">
-            <select class="form-control" [(ngModel)]="filterProdName">
-                <option *ngFor="let product of products" value="{{product.id}}">{{product.name}}</option>
+            <select class="form-control" [(ngModel)]="filterProdName" (ngModelChange)="prodChange($event)">
+                <option *ngFor="let product of products" value="{{product}}">{{product}}</option>
             </select>
         </div>
         <div class="filter">
-            <select class="form-control" [(ngModel)]="filterPlName">
-                <option *ngFor="let pipeline of pipelines" value="{{pipeline.id}}">{{pipeline.name}}</option>
+            <select class="form-control" [(ngModel)]="filterPlId" (ngModelChange)="plChange($event)">
+                <option *ngFor="let pipeline of pipelines" value="{{pipeline.pipelineId}}">{{pipeline.pipelineName}}</option>
             </select>
+        </div>
+        
+        <!--Create-->
+        <div class="pull-right" style="" *ngIf="plConfigStatus == 0">
+            <button type="button" class="btn btn-primary" (click)="newPipeline();">
+                Create New Pipeline
+            </button>
+        </div>
+        
+        <!--Save-->
+        <div class="pull-right" style="" *ngIf="plConfigStatus == 1">
+            <button type="button" class="btn btn-primary" (click)="savePipeline();">
+                Save
+            </button>
+        </div>
+        
+        <!--Pipeline Operations-->
+        <div class="pull-right" style="" *ngIf="plConfigStatus == 2">
+            <button type="button" class="btn btn-sm btn-info" (click)="startAll();">
+                <span class="glyphicon glyphicon-play" aria-hidden="true"></span> Start All
+            </button>
+            <button type="button" class="btn btn-sm btn-info" (click)="stopAll();">
+                <span class="glyphicon glyphicon-stop" aria-hidden="true"></span> Stop All
+            </button>
+            <button type="button" class="btn btn-sm btn-info" (click)="restartAll();">
+                <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Restart All
+            </button>
         </div>
     </div>
     
@@ -35,17 +64,43 @@
         <hr>
     </div>
 
-    <!--Group0-->
+    <!--Pipeline-->
     <div class="row">
-        <div *ngFor="let capability of (capabilities | plconfigAppDisplayFmt:0)" class="col-lg-3 col-md-6">
-            <div class="panel panel-primary">
+        <div *ngFor="let capability of capabilities" class="{{capability.class}}">
+            <!--Config-->
+            <div class="panel panel-default" *ngIf="capability.provider == ''">
+                <div class="panel-heading add-app clickable" data-toggle="modal" data-target="#add_capability_dlg" (click)="addCapability(capability);">
+                    <div>
+                        <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                    </div>
+                    <div>
+                        <span>{{capability.description}}</span>
+                    </div>
+                </div>
+            </div>
+
+            <!--Capability-->
+            <div class="panel panel-primary added-app" *ngIf="capability.provider != ''">
                 <div class="panel-heading">
                     <div class="row">
                         <div class="col-xs-4">
                             <img class="app-icon" src="{{capability.img}}">
                         </div>
                         <div class="col-xs-8 text-right">
-                            <h1>{{capability.name}}</h1>
+                            <div>
+                                <a href="{{capability.url}}" target="_blank">
+                                    <span class="glyphicon glyphicon-info-sign provider-cfg clickable" aria-hidden="true"></span>
+                                </a>
+                                <a>
+                                    <span class="glyphicon glyphicon-cog provider-cfg clickable" aria-hidden="true" data-toggle="modal" data-target="#config_capability_dlg" (click)="configCapability(capability);"></span>
+                                </a>
+                                <a *ngIf="plConfigStatus != 2">
+                                    <span class="glyphicon glyphicon-remove provider-cfg clickable" aria-hidden="true" data-toggle="modal" data-target="#del_dlg"  (click)="confirmRemoveCapability(capability);"></span>
+                                </a>
+                            </div>
+                            <div>
+                                <span class="provider-name">{{capability.providerName}}</span>
+                            </div>
                         </div>
                     </div>
                     <div class="row">
@@ -54,73 +109,120 @@
                         </div>
                     </div>
                 </div>
-                <a href="{{capability.url}}" target="_blank">
-                    <div class="panel-footer">
-                        <span class="pull-left">View Details</span>
-                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                        <div class="clearfix"></div>
-                    </div>
-                </a>
+
+                <!--Pipeline Operations-->
+                <center class="panel-footer">
+                    <button type="button" class="btn btn-sm btn-link" [disabled]="plConfigStatus != 2 || !capability.status || capability.status == 0" [class.hidden]="capability.status && capability.status != 2" (click)="startOne(capability)">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span> Start
+                    </button>
+                    <button type="button" class="btn btn-sm btn-link" [disabled]="plConfigStatus != 2 || !capability.status || capability.status == 0" [class.hidden]="capability.status && capability.status != 1" (click)="stopOne(capability)">
+                        <span class="glyphicon glyphicon-stop" aria-hidden="true"></span> Stop
+                    </button>
+                    <button type="button" class="btn btn-sm btn-link" [disabled]="plConfigStatus != 2 || !capability.status || capability.status == 0" [class.hidden]="capability.status && capability.status != 1" (click)="restartOne(capability)">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Restart
+                    </button>
+                    <!--<button type="button" class="btn btn-sm btn-link">
+                        <span class="pull-right"><i class="glyphicon glyphicon-info-sign"></i></span>
+                    </button>-->
+                    <!--<button type="button" class="btn btn-sm btn-link">
+                        <span class="pull-right"><i class="glyphicon glyphicon-cog"></i></span>
+                    </button>-->
+                </center>
             </div>
         </div>
     </div>
 
-    <!--Group1-->
-    <div class="row">
-        <div *ngFor="let capability of (capabilities | plconfigAppDisplayFmt:1)" class="col-lg-3 col-md-6">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <div class="row">
-                        <div class="col-xs-4">
-                            <img class="app-icon" src="{{capability.img}}">
-                        </div>
-                        <div class="col-xs-8 text-right">
-                            <h1>{{capability.name}}</h1>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-11 col-xs-offset-1 text-right">
-                            <div>{{capability.description}}</div>
-                        </div>
-                    </div>
+    <!-- Modal Delete Confirm-->
+    <div class="modal fade" id="del_dlg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">
+                        Remove Capability
+                    </h4>
                 </div>
-                <a href="{{capability.url}}" target="_blank">
-                    <div class="panel-footer">
-                        <span class="pull-left">View Details</span>
-                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                        <div class="clearfix"></div>
-                    </div>
-                </a>
+                <div class="modal-body">
+                    <div>Are you sure you want to delete the capability bellow?</div>
+                    <br>
+                    <strong><p>{{currCapability.providerName}}</p></strong>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="removeCapability(currCapability);">Remove</button>
+                </div>
             </div>
         </div>
     </div>
 
-    <!--Group2-->
-    <div class="row">
-        <div *ngFor="let capability of (capabilities | plconfigAppDisplayFmt:2)" class="col-lg-3 col-md-6">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <div class="row">
-                        <div class="col-xs-4">
-                            <img class="app-icon" src="{{capability.img}}">
+    <!-- Modal Add Capability-->
+    <div class="modal fade" id="add_capability_dlg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">
+                        <div>
+                            Select Capability Provider
                         </div>
-                        <div class="col-xs-8 text-right">
-                            <h1>{{capability.name}}</h1>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-11 col-xs-offset-1 text-right">
-                            <div>{{capability.description}}</div>
-                        </div>
-                    </div>
+                    </h4>
                 </div>
-                <a href="{{capability.url}}" target="_blank">
-                    <div class="panel-footer">
-                        <span class="pull-left">View Details</span>
-                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                        <div class="clearfix"></div>
-                    </div>
-                </a>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="recipient-name" class="control-label">Capability Provider:</label>
+                            <select class="form-control" *ngIf="currCapability" [(ngModel)]="currCapability.provider">
+                                <option *ngFor="let option of selectOptions" value="{{option.id}}">{{option.name}}</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="saveCapability(currCapability);">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Capability Configuration-->
+    <div class="modal fade" id="config_capability_dlg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">
+                        <div>
+                            Capability Configuration
+                        </div>
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <form *ngIf="currConfigs && currConfigs.length == 0">
+                        This capability has no config options.
+                    </form>
+                    <form *ngIf="currConfigs && currConfigs.length != 0">
+                        <div *ngFor="let config of currConfigs" class="form-group">
+                            <label for="recipient-name" class="control-label">{{config.template.dispName}}:</label>
+
+                            <div *ngIf="config.kind == 'text'">
+                                <input type="text" class="form-control" id="recipient-name" [(ngModel)]="config.value">
+                            </div>
+
+                            <div *ngIf="config.kind == 'option'">
+                                <select class="form-control" [(ngModel)]="config.value">
+                                    <option *ngFor="let option of config.template.options" value="{{option}}">{{option}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <form *ngIf="currConfigs && currConfigs.length == 0">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+                    </form>
+                    <form *ngIf="currConfigs && currConfigs.length != 0">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="saveConfig(currConfigs);">Save</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

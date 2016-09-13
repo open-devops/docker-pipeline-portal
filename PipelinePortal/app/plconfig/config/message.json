@@ -1,0 +1,57 @@
+[
+  {
+    "id": "pl-001",
+    "content": "Failed to get organization data.",
+    "type": "error"
+  },
+  {
+    "id": "pl-002",
+    "content": "Failed to get product & pipeline data.",
+    "type": "error"
+  },
+  {
+    "id": "pl-003",
+    "content": "Failed to get pipeline provision data.",
+    "type": "error"
+  },
+  {
+    "id": "pl-004",
+    "content": "Failed to save pipeline provision data.",
+    "type": "error"
+  },
+  {
+    "id": "pl-005",
+    "content": "Failed to start capability.",
+    "type": "error"
+  },
+  {
+    "id": "pl-006",
+    "content": "Failed to stop capability.",
+    "type": "error"
+  },
+  {
+    "id": "pl-007",
+    "content": "Failed to restart capability.",
+    "type": "error"
+  },
+  {
+    "id": "pl-008",
+    "content": "Failed to start capabilities.",
+    "type": "error"
+  },
+  {
+    "id": "pl-009",
+    "content": "Failed to stop capabilities.",
+    "type": "error"
+  },
+  {
+    "id": "pl-010",
+    "content": "Failed to restart capabilities.",
+    "type": "error"
+  },
+  {
+    "id": "pl-011",
+    "content": "Failed to get status of pipeline.",
+    "type": "error"
+  }
+]

@@ -3,6 +3,11 @@
     margin: 0px 20px 0 0;
 }
 
+.modal-header {
+    text-align: center;
+}
+
 .modal-content {
     border: 1px solid #2a9fd6;
 }
+
