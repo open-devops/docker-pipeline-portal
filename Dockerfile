@@ -18,6 +18,6 @@ COPY ./PipelinePortal /PipelinePortal
 RUN chown -R nodejs:nodejs /PipelinePortal
 USER nodejs
 
-CMD cat app/data/capabilities.json.template |sed s/PORTAL_LOCALHOST/${PORTAL_LOCALHOST}/g >app/data/capabilities.json && \
+CMD cat app/plconfig/model/capability-template.ts.template |sed s/PORTAL_LOCALHOST/${PORTAL_LOCALHOST}/g >app/plconfig/model/capability-template.ts && \
     cat app/common/config/systemconfig.ts.template |sed s/PORTAL_LOCALHOST/${PORTAL_LOCALHOST}/g >app/common/config/systemconfig.ts && \
     npm start
