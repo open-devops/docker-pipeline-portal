@@ -351,8 +351,9 @@ export class PLConfigComponent implements OnInit{
             .then( ret => {
                     if (!ret) {
                         this.msgService.error('pl-004');
-                        this.pipelineProvision = new PipelineProvision();
+                        // this.pipelineProvision = new PipelineProvision();
                     } else {
+                        this.getPipelineStatus(this.pipelineProvision.pipelineId);
                         this.plConfigStatus = 2;
                     }
             })

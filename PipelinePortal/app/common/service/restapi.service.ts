@@ -90,13 +90,17 @@ export class RestApi {
     }
 
     private extractData(res: Response) {
-      let body = res.json();
-      body = body || [];
-
-      if (body) {
+        let body:any;
+        if(res.text() != '') {
+            body = res.json();
+        } else {
+            body = {};
+        }
+        
+        if (body) {
         //   body.forEach(function (element: any) {
         //   });
-      }
+        }
 
       return Promise.resolve(body);
     }
