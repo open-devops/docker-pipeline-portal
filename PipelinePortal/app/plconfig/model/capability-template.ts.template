@@ -129,7 +129,7 @@ export var SelectOptions = [
                 "id": "NEXUS",
                 "name": "Nexus",
                 "img": "/app/share/img/app/nexus.png",
-                "url": "http://PORTAL_LOCALHOST:8090",
+                "url": "http://PORTAL_LOCALHOST:9011",
                 "configItems": new Array<any>()
             }
         ]
@@ -143,7 +143,7 @@ export var SelectOptions = [
                 "id": "HARBOR",
                 "name": "Harbor",
                 "img": "/app/share/img/app/harbor.png",
-                "url": "http://PORTAL_LOCALHOST:8090",
+                "url": "http://PORTAL_LOCALHOST:9021",
                 "configItems": new Array<any>()
             }
         ]
