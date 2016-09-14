@@ -87,7 +87,7 @@ export var SelectOptions = [
                 "id": "JENKINS",
                 "name": "Jenkins",
                 "img": "/app/share/img/app/jenkins.png",
-                "url": "http://PORTAL_LOCALHOST:9080",
+                "url": "http://PORTAL_LOCALHOST:9080/blue",
                 "configItems": new Array<any>()
             }
         ]
