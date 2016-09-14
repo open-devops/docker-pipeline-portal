@@ -65,3 +65,7 @@
 .provider-name {
     font-size: 34px;
 }
+
+.btn-left-padding {
+    padding-left: 20px;
+}

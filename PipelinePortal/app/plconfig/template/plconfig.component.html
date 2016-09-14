@@ -40,12 +40,12 @@
         </div>
         
         <!--Save-->
-        <div class="pull-right" style="" *ngIf="plConfigStatus == 1">
-            <button type="button" class="btn btn-primary" (click)="savePipeline();">
+        <div class="pull-right btn-left-padding"  *ngIf="plConfigStatus == 1 || plConfigStatus == 2">
+            <button type="button" class="btn btn-sm btn-primary" (click)="savePipeline();">
                 Save
             </button>
         </div>
-        
+
         <!--Pipeline Operations-->
         <div class="pull-right" style="" *ngIf="plConfigStatus == 2">
             <button type="button" class="btn btn-sm btn-info" (click)="startAll();">
@@ -58,6 +58,7 @@
                 <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Restart All
             </button>
         </div>
+        
     </div>
     
     <div class="row">
@@ -94,7 +95,7 @@
                                 <a>
                                     <span class="glyphicon glyphicon-cog provider-cfg clickable" aria-hidden="true" data-toggle="modal" data-target="#config_capability_dlg" (click)="configCapability(capability);"></span>
                                 </a>
-                                <a *ngIf="plConfigStatus != 2">
+                                <a>
                                     <span class="glyphicon glyphicon-remove provider-cfg clickable" aria-hidden="true" data-toggle="modal" data-target="#del_dlg"  (click)="confirmRemoveCapability(capability);"></span>
                                 </a>
                             </div>
