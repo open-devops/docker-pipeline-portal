@@ -49,11 +49,10 @@ export class AccountComponent implements OnInit {
 
     ngOnInit() {
         this.currAccount = new Account();
-        this.filterOrgId = "";
+        this.filterOrgId = '';
         this.msgService.loadCfgData('app/account/config/message.json');
         this.organizationService.init()
-                                 .then(res =>
-                                 {
+                                 .then(res => {
                                      this.getOrganizations();
                                  });
         this.roleService.init();
@@ -147,7 +146,7 @@ export class AccountComponent implements OnInit {
                 if (!accounts) {
                     this.msgService.error('acc-004');
                 } else {
-                    this.refreshData(this, accounts)
+                    this.refreshData(this, accounts);
                 }
             })
             .catch(error => {
@@ -170,7 +169,7 @@ export class AccountComponent implements OnInit {
 
     private refreshData(comp: any, accounts: Account[]) {
         comp.accounts = accounts;
-        comp.switchModalAccount(false)
+        comp.switchModalAccount(false);
     }
 
     private switchModalAccount(show: boolean) {

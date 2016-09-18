@@ -37,8 +37,7 @@ export class OrganizationComponent implements OnInit {
         this.currOrganization = new Organization();
         this.msgService.loadCfgData('app/organization/config/message.json');
         this.organizationService.init()
-                                 .then(res =>
-                                 {
+                                 .then(res => {
                                      this.getOrganizations();
                                  });
     }
@@ -75,7 +74,7 @@ export class OrganizationComponent implements OnInit {
                 if (!organizations) {
                     this.msgService.error('org-004');
                 } else {
-                    this.refreshData(this, organizations)
+                    this.refreshData(this, organizations);
                 }
             })
             .catch(error => {
@@ -96,7 +95,7 @@ export class OrganizationComponent implements OnInit {
                 if (!organizations) {
                     this.msgService.error('org-003');
                 } else {
-                    this.refreshData(this, organizations)
+                    this.refreshData(this, organizations);
                 }
             })
             .catch(error => {
@@ -107,7 +106,7 @@ export class OrganizationComponent implements OnInit {
 
     private refreshData(comp: any, organizations: Organization[]) {
         comp.organizations = organizations;
-        comp.switchModalOrganization(false)
+        comp.switchModalOrganization(false);
     }
 
     private switchModalOrganization(show: boolean) {

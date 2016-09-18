@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Organization } from '../../organization/model/organization';
 import { OrganizationService } from '../../organization/service/organization.service';
 import { ProductService } from '../../product/service/product.service';
-import { PipelineProvision, PipelineCapability, PipelineCapabilityConfigItem, PipelineStatus, PLOperation, CapabilityStatus } from '../model/PipelineProvision';
+import { PipelineProvision,
+         PipelineCapability,
+         PipelineCapabilityConfigItem,
+         PipelineStatus,
+         PLOperation,
+         CapabilityStatus } from '../model/PipelineProvision';
 import * as CapTemplate from '../model/capability-template';
 import { CapabilityService } from '../service/plconfig.service';
 import { ObjectService } from '../../common/service/object.service';
@@ -28,7 +32,7 @@ import { ToastsManager} from 'ng2-toastr/ng2-toastr';
     ]
 })
 
-export class PLConfigComponent implements OnInit{
+export class PLConfigComponent implements OnInit {
     organizations: any[];
     prodAndPL: any[];
     products: string[];
@@ -36,7 +40,7 @@ export class PLConfigComponent implements OnInit{
 
     pipelineProvision: PipelineProvision;
     capabilities: PipelineCapability[];
-    plConfigStatus: number = 0;    //0:none, 1:creating, 2:done
+    plConfigStatus: number = 0;    // 0:none, 1:creating, 2:done
 
     filterOrgId: string;
     filterProdName: string;
@@ -48,6 +52,25 @@ export class PLConfigComponent implements OnInit{
 
     error: any;
 
+    private static calcClass(width: number): string {
+      let classStr = 'col-lg-3';
+      switch (width) {
+        case 1:
+          classStr = 'col-lg-3';
+          break;
+        case 2:
+          classStr = 'col-lg-6';
+          break;
+        case 3:
+          classStr = 'col-lg-9';
+          break;
+        case 4:
+          classStr = 'col-lg-12';
+          break;
+      }
+      return classStr;
+    }
+
     constructor(
         private organizationService: OrganizationService,
         private productService: ProductService,
@@ -57,17 +80,16 @@ export class PLConfigComponent implements OnInit{
 
     // Initialization
     ngOnInit() {
-        this.filterOrgId = "";
+        this.filterOrgId = '';
         this.filterProdName = '';
-        this.filterPlId ='';
+        this.filterPlId = '';
 
         this.currCapability = new PipelineCapability();
 
 
         this.msgService.loadCfgData('app/plconfig/config/message.json');
         this.organizationService.init()
-                                 .then(res =>
-                                 {
+                                 .then(res => {
                                      this.getOrganizations();
                                  });
     }
@@ -175,16 +197,16 @@ export class PLConfigComponent implements OnInit{
         capabilities.forEach((element, index) => {
 
             // Capability Provider Info
-            for (let i=0; i<CapTemplate.SelectOptions.length; i++) {
+            for (let i = 0; i < CapTemplate.SelectOptions.length; i++) {
                 let capKind = CapTemplate.SelectOptions[i];
-                if (element.kind == capKind.kind) {
+                if (element.kind === capKind.kind) {
                     capabilities[index].providerName = capabilities[index].provider;
                     capabilities[index].class = PLConfigComponent.calcClass(capKind.dispWidth);
                     capabilities[index].description = capKind.description;
 
                     // Capability Selectable Providers Info
                     capKind.selectOptions.forEach(opt => {
-                        if (capabilities[index].provider == opt.name) {
+                        if (capabilities[index].provider === opt.name) {
                             capabilities[index].url = opt.url;
                             capabilities[index].img = opt.img;
                             capabilities[index].configItems = capabilities[index].configItems || [];
@@ -194,12 +216,12 @@ export class PLConfigComponent implements OnInit{
                                 // Already has existing data, set usefull data from config item template
                                 capabilities[index].configItems.forEach((item, itemIndex) => {
                                     opt.configItems.forEach(cfgItem => {
-                                        if (item.name == cfgItem.id) {
+                                        if (item.name === cfgItem.id) {
                                             capabilities[index].configItems[itemIndex]['template'] = cfgItem;
                                         }
                                     });
                                 });
-                            } else if (capabilities[index].configItems.length == 0 && opt.configItems.length > 0) {
+                            } else if (capabilities[index].configItems.length === 0 && opt.configItems.length > 0) {
                                 // There is no existing data, copy data from config item temeplate
                                 opt.configItems.forEach(cfgItem => {
                                     let newItem = new PipelineCapabilityConfigItem();
@@ -208,10 +230,8 @@ export class PLConfigComponent implements OnInit{
                                     newItem['template'] = cfgItem;
 
                                     capabilities[index].configItems.push(newItem);
-                                })
+                                });
                             }
-
-
                         }
                     });
                     break;
@@ -266,30 +286,11 @@ export class PLConfigComponent implements OnInit{
         }, 200);
     }
 
-    private static calcClass(width: number): string {
-        let classStr: string = 'col-lg-3';
-        switch(width) {
-            case 1:
-                classStr = 'col-lg-3';
-                break;
-            case 2:
-                classStr = 'col-lg-6';
-                break;
-            case 3:
-                classStr = 'col-lg-9';
-                break;
-            case 4:
-                classStr = 'col-lg-12';
-                break;
-        }
-        return classStr;
-    }
-
     addCapability(capability: PipelineCapability) {
         this.currCapability = this.objectService.deepClone(capability);
 
         CapTemplate.SelectOptions.forEach(element => {
-            if (element.kind == capability.kind) {
+            if (element.kind === capability.kind) {
                 this.selectOptions = element.selectOptions;
             }
         });
@@ -297,7 +298,7 @@ export class PLConfigComponent implements OnInit{
 
     saveCapability(capability: PipelineCapability) {
         this.selectOptions.forEach(element => {
-            if (element.id == capability.provider) {
+            if (element.id === capability.provider) {
                 capability.img = element.img;
                 capability.providerName = element.name;
 
@@ -317,7 +318,7 @@ export class PLConfigComponent implements OnInit{
         });
 
         this.capabilities.forEach((element, index) => {
-            if (element.kind == capability.kind) {
+            if (element.kind === capability.kind) {
                 this.capabilities[index] = capability;
             }
         });
@@ -365,7 +366,7 @@ export class PLConfigComponent implements OnInit{
 
     removeCapability(capability: PipelineCapability) {
         this.capabilities.forEach((element, index) => {
-            if (element.kind == capability.kind) {
+            if (element.kind === capability.kind) {
                 this.capabilities[index].provider = '';
                 this.capabilities[index].providerName = '';
                 this.capabilities[index].img = '';

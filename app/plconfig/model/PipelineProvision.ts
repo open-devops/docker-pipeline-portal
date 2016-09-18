@@ -60,7 +60,7 @@ export class PipelineStatus {
     cmp: string;
 }
 
-export enum PLOperation{
+export enum PLOperation {
     StartOne = 1,
     StopOne,
     RestartOne,

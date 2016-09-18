@@ -38,7 +38,7 @@ export class DashboardComponent implements OnInit {
             {'id': 'DDC_03', 'name': 'DDC_03'},
             {'id': 'DDC_04', 'name': 'DDC_04'}
         ];
-        this.filterOrgName = "DDC_01";
+        this.filterOrgName = 'DDC_01';
         this.products = [
             {'id': 'DDC_PROD_01', 'name': 'DDC_PROD_01'},
             {'id': 'DDC_PROD_02', 'name': 'DDC_PROD_02'},
@@ -52,7 +52,7 @@ export class DashboardComponent implements OnInit {
             {'id': 'DDC_PL_03', 'name': 'DDC_PL_03'},
             {'id': 'DDC_PL_04', 'name': 'DDC_PL_04'}
         ];
-        this.filterPlName ='DDC_PL_01';
+        this.filterPlName = 'DDC_PL_01';
         this.currDashboard = new Dashboard();
         this.getDashboards();
     }
@@ -91,7 +91,7 @@ export class DashboardComponent implements OnInit {
 
     private refreshData(comp: any, dashboards: Dashboard[]) {
         comp.dashboards = dashboards;
-        comp.switchModalDashboard(false)
+        comp.switchModalDashboard(false);
     }
 
     private switchModalDashboard(show: boolean) {

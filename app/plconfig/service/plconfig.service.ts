@@ -7,11 +7,41 @@ import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class CapabilityService {
+
     API_PORT: string = '8700';
+
+    private static getOpeApiKey(opeType: PLOperation): string {
+      let msgId: string;
+
+      switch (opeType) {
+        case PLOperation.StartOne:
+          msgId = 'pipeline.startOne';
+          break;
+        case PLOperation.StopOne:
+          msgId = 'pipeline.stopOne';
+          break;
+        case PLOperation.RestartOne:
+          msgId = 'pipeline.restartOne';
+          break;
+
+        case PLOperation.StartAll:
+          msgId = 'pipeline.startAll';
+          break;
+        case PLOperation.StopAll:
+          msgId = 'pipeline.stopAll';
+          break;
+        case PLOperation.RestartAll:
+          msgId = 'pipeline.restartAll';
+          break;
+      }
+
+      return msgId;
+    }
+
     constructor(
         private restApiCfg: RestApiCfg,
         private restApi: RestApi
-    ) { }
+    ) {}
 
     init(): Promise<any> {
         return this.restApiCfg.loadCfgData();
@@ -73,33 +103,5 @@ export class CapabilityService {
                             .then(ret => {
                                 return ret;
                             });
-    }
-
-    private static getOpeApiKey(opeType: PLOperation): string {
-        let msgId: string;
-
-        switch (opeType) {
-            case PLOperation.StartOne:
-                msgId = 'pipeline.startOne';
-                break;
-            case PLOperation.StopOne:
-                msgId = 'pipeline.stopOne';
-                break;
-            case PLOperation.RestartOne:
-                msgId = 'pipeline.restartOne';
-                break;
-
-            case PLOperation.StartAll:
-                msgId = 'pipeline.startAll';
-                break;
-            case PLOperation.StopAll:
-                msgId = 'pipeline.stopAll';
-                break;
-            case PLOperation.RestartAll:
-                msgId = 'pipeline.restartAll';
-                break;
-        }
-
-        return msgId;
     }
 }

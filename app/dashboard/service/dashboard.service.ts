@@ -17,9 +17,9 @@ export class DashboardService {
 
     saveDashboard(dashboards: Dashboard[], org: Dashboard): Promise<Dashboard[]> {
         let targetOrg: Dashboard;
-        
-        dashboards.forEach(function (element:any) {
-            if (element.id == org.id) {
+
+        dashboards.forEach(function(element: any) {
+            if (element.id === org.id) {
                 targetOrg = element;
             }
         });
@@ -28,7 +28,7 @@ export class DashboardService {
             targetOrg = new Dashboard();
             targetOrg.id = 'DDC_' + dashboards.length;
             dashboards.push(targetOrg);
-        } 
+        }
 
         targetOrg.name = org.name;
         targetOrg.orgId = org.orgId;
@@ -37,11 +37,11 @@ export class DashboardService {
         return new Promise<Dashboard[]>(resole => resole(dashboards));
 
     }
-    
+
     removeDashboard(dashboards: Dashboard[], org: Dashboard): Promise<Dashboard[]> {
-        
-        dashboards = dashboards.filter(function (element:any) {
-            return element.id != org.id;
+
+        dashboards = dashboards.filter(function(element: any) {
+            return element.id !== org.id;
         });
 
         return new Promise<Dashboard[]>(resole => resole(dashboards));
@@ -58,7 +58,7 @@ export class DashboardService {
 
       return body;
     }
-    
+
     private handleError(error: any) {
         console.error('An error occurred', error);
         return Promise.reject(error.message || error);

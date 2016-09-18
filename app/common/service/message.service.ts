@@ -24,7 +24,7 @@ export class MessageService {
                          .catch(this.handleError);
     }
 
-    getMessage(id: string):MessageModel {
+    getMessage(id: string): MessageModel {
         let result: MessageModel;
         for (let messageItem of this.msgData) {
             if (messageItem.id.toLowerCase() === id.toLowerCase()) {

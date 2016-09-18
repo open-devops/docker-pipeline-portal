@@ -54,14 +54,14 @@ export class ProductService {
             let url = this.restApiCfg.getRestApiUrl('prod.add');
             return this.restApi.post(url, undefined, undefined, prod)
                                .then(ret => {
-                                   return this.saveData(ret, products)
+                                   return this.saveData(ret, products);
                                 });
         } else {
             // Update
             let url = this.restApiCfg.getRestApiUrl('prod.put');
             return this.restApi.put(url, undefined, undefined, prod)
                                .then(ret => {
-                                   return this.saveData(ret, products)
+                                   return this.saveData(ret, products);
                                 });
         }
 
@@ -79,10 +79,10 @@ export class ProductService {
 
         return this.restApi.delete(url, pathParams, undefined, undefined)
                            .then(ret => {
-                               if (ret == undefined) {
+                               if (ret === undefined) {
                                     return undefined;
                                 }
-                               return this.remoteData(prod.id, products)
+                               return this.remoteData(prod.id, products);
                             });
     }
 
@@ -90,10 +90,10 @@ export class ProductService {
         if (!prod) {
             return undefined;
         }
-        let isExits: boolean = false;
+        let isExits = false;
 
-        products.forEach(function (element:any, index: number) {
-            if (element.id == prod.id) {
+        products.forEach(function (element: any, index: number) {
+            if (element.id === prod.id) {
                 isExits = true;
                 products[index] = prod;
             }
@@ -107,8 +107,8 @@ export class ProductService {
     }
 
     private remoteData(id: string, products: Product[]) {
-        products = products.filter(function (element:any) {
-            return element.id != id;
+        products = products.filter(function(element: any) {
+            return element.id !== id;
         });
 
         return products;

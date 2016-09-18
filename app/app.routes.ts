@@ -24,4 +24,4 @@ export const routes: Routes = [
     ...dashboardRoutes
 ];
 
-export const routing : ModuleWithProviders = RouterModule.forRoot(routes);
+export const routing: ModuleWithProviders = RouterModule.forRoot(routes);

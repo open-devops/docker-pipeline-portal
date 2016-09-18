@@ -19,9 +19,8 @@ export class RestApiCfg {
     loadCfgData(): Promise<any> {
         return this.http.get('app/common/config/restapi.json')
                          .toPromise()
-                         .then(res =>
-                         {
-                             this.restApiList = res.json()
+                         .then(res => {
+                             this.restApiList = res.json();
                          })
                          .catch(this.handleError);
     }

@@ -28,12 +28,7 @@ export class RestApi {
     }
 
     private httpRequest(type: string, url: string, jwt: string, pathParams: Array<any>, queryParams: any, body: any): Promise<any> {
-        console.debug(`START ${type} ${new Date().toLocaleString()}: ${url}`);
-
         const path = pathParams ? this.createPath(url, pathParams) : url;
-
-        console.debug(`START ${type} ${new Date().toLocaleString()}: ${path}`);
-
 
         let queryParameters = new URLSearchParams();
         let headerParams = new Headers();
@@ -57,8 +52,7 @@ export class RestApi {
                            .toPromise()
                            .then(
                                 res => {
-                                    console.debug(`SUCCESS ${type} ${new Date().toLocaleString()}: ${path}`);
-                                    if (type == 'DELETE') {
+                                    if (type === 'DELETE') {
                                         return Promise.resolve(0);
                                     } else {
                                         return this.extractData(res);
@@ -68,7 +62,6 @@ export class RestApi {
                             )
                             .catch(
                                 error => {
-                                    console.debug(`FAILURE ${type} ${new Date().toLocaleString()}: ${path}`);
                                     this.handleError(error);
                                 }
                             );
@@ -85,16 +78,11 @@ export class RestApi {
     }
 
     private extractData(res: Response) {
-        let body:any;
-        if(res.text() != '') {
+        let body: any;
+        if (res.text() !== '') {
             body = res.json();
         } else {
             body = {};
-        }
-
-        if (body) {
-        //   body.forEach(function (element: any) {
-        //   });
         }
 
       return Promise.resolve(body);

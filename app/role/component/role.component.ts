@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Organization } from '../../organization/model/organization';
 import { OrganizationService } from '../../organization/service/organization.service';
 import { Role } from '../model/role';
 import { RoleService } from '../service/role.service';
@@ -41,11 +40,10 @@ export class RoleComponent implements OnInit {
 
     ngOnInit() {
         this.currRole = new Role();
-        this.filterOrgId = "";
+        this.filterOrgId = '';
         this.msgService.loadCfgData('app/role/config/message.json');
         this.organizationService.init()
-                                 .then(res =>
-                                 {
+                                 .then(res => {
                                      this.getOrganizations();
                                  });
         this.roleService.init();
@@ -114,7 +112,7 @@ export class RoleComponent implements OnInit {
                 if (!roles) {
                     this.msgService.error('role-003');
                 } else {
-                    this.refreshData(this, roles)
+                    this.refreshData(this, roles);
                 }
             })
             .catch(error => {
@@ -135,7 +133,7 @@ export class RoleComponent implements OnInit {
                 if (!roles) {
                     this.msgService.error('role-004');
                 } else {
-                    this.refreshData(this, roles)
+                    this.refreshData(this, roles);
                 }
             })
             .catch(error => {
@@ -146,7 +144,7 @@ export class RoleComponent implements OnInit {
 
     private refreshData(comp: any, roles: Role[]) {
         comp.roles = roles;
-        comp.switchModalRole(false)
+        comp.switchModalRole(false);
     }
 
     private switchModalRole(show: boolean) {

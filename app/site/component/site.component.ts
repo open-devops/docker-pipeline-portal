@@ -30,7 +30,7 @@ export class SiteComponent implements OnInit {
     getOrganizations() {
         this.siteService
             .getSiteMenus()
-            .then(siteMenus => this.refreshData(this, siteMenus))
+            .then(siteMenus => this.refreshData(this, siteMenus));
     }
 
     private refreshData(comp: any, siteMenus: SiteMenu[]) {
@@ -42,6 +42,6 @@ export class SiteComponent implements OnInit {
         this.selectedMenu = menu;
 
         let link = [menu.path];
-        this.router.navigate(link)
+        this.router.navigate(link);
     }
 }

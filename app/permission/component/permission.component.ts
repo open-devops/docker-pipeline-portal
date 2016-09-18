@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Organization } from '../../organization/model/organization';
 import { OrganizationService } from '../../organization/service/organization.service';
 import { ProductService } from '../../product/service/product.service';
 import { Role } from '../../role/model/role';
@@ -58,14 +57,13 @@ export class PermissionComponent implements OnInit {
 
     ngOnInit() {
         this.currPermission = new Permission();
-        this.filterOrgId = "";
+        this.filterOrgId = '';
         this.filterProdName = '';
-        this.filterPlId ='';
+        this.filterPlId = '';
 
         this.msgService.loadCfgData('app/permission/config/message.json');
         this.organizationService.init()
-                                 .then(res =>
-                                 {
+                                 .then(res => {
                                      this.getOrganizations();
                                  });
         this.productService.init();
@@ -216,7 +214,7 @@ export class PermissionComponent implements OnInit {
                 if (!permissions) {
                     this.msgService.error('prod-006');
                 } else {
-                    this.refreshData(this, permissions)
+                    this.refreshData(this, permissions);
                 }
             })
             .catch(error => {
@@ -237,7 +235,7 @@ export class PermissionComponent implements OnInit {
                 if (!permissions) {
                     this.msgService.error('prod-007');
                 } else {
-                    this.refreshData(this, permissions)
+                    this.refreshData(this, permissions);
                 }
             })
             .catch(error => {
@@ -248,7 +246,7 @@ export class PermissionComponent implements OnInit {
 
     private refreshData(comp: any, permissions: Permission[]) {
         comp.permissions = permissions;
-        comp.switchModalPermission(false)
+        comp.switchModalPermission(false);
     }
 
     private switchModalPermission(show: boolean) {

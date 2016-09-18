@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Organization } from '../../organization/model/organization';
 import { OrganizationService } from '../../organization/service/organization.service';
 import { Product } from '../model/product';
 import { ProductService } from '../service/product.service';
@@ -41,11 +40,10 @@ export class ProductComponent implements OnInit {
 
     ngOnInit() {
         this.currProduct = new Product();
-        this.filterOrgId = "";
+        this.filterOrgId = '';
         this.msgService.loadCfgData('app/product/config/message.json');
         this.organizationService.init()
-                                 .then(res =>
-                                 {
+                                 .then(res => {
                                      this.getOrganizations();
                                  });
         this.productService.init();
@@ -90,7 +88,7 @@ export class ProductComponent implements OnInit {
 
                     let prodNames = Object.keys(products);
                     prodNames.forEach(prodName => {
-                        for (var index = 0; index < products[prodName].length; index++) {
+                        for (let index = 0; index < products[prodName].length; index++) {
                             this.products.push(products[prodName][index]);
                         }
                     });
@@ -121,7 +119,7 @@ export class ProductComponent implements OnInit {
                 if (!products) {
                     this.msgService.error('prod-003');
                 } else {
-                    this.refreshData(this, products)
+                    this.refreshData(this, products);
                 }
             })
             .catch(error => {
@@ -142,7 +140,7 @@ export class ProductComponent implements OnInit {
                 if (!products) {
                     this.msgService.error('prod-004');
                 } else {
-                    this.refreshData(this, products)
+                    this.refreshData(this, products);
                 }
             })
             .catch(error => {
@@ -153,7 +151,7 @@ export class ProductComponent implements OnInit {
 
     private refreshData(comp: any, products: Product[]) {
         comp.products = products;
-        comp.switchModalProduct(false)
+        comp.switchModalProduct(false);
     }
 
     private switchModalProduct(show: boolean) {

@@ -53,14 +53,14 @@ export class RoleService {
             let url = this.restApiCfg.getRestApiUrl('role.add');
             return this.restApi.post(url, undefined, undefined, role)
                                .then(ret => {
-                                   return this.saveData(ret, roles)
+                                   return this.saveData(ret, roles);
                                 });
         } else {
             // Update
             let url = this.restApiCfg.getRestApiUrl('role.put');
             return this.restApi.put(url, undefined, undefined, role)
                                .then(ret => {
-                                   return this.saveData(ret, roles)
+                                   return this.saveData(ret, roles);
                                 });
         }
     }
@@ -77,10 +77,10 @@ export class RoleService {
 
         return this.restApi.delete(url, pathParams, undefined, undefined)
                            .then(ret => {
-                               if (ret == undefined) {
+                               if (ret === undefined) {
                                     return undefined;
                                 }
-                               return this.remoteData(role.id, roles)
+                               return this.remoteData(role.id, roles);
                             });
     }
 
@@ -88,10 +88,10 @@ export class RoleService {
         if (!role) {
             return undefined;
         }
-        let isExits: boolean = false;
+        let isExits = false;
 
-        roles.forEach(function (element:any, index: number) {
-            if (element.id == role.id) {
+        roles.forEach(function(element: any, index: number) {
+            if (element.id === role.id) {
                 isExits = true;
                 roles[index] = role;
             }
@@ -105,8 +105,8 @@ export class RoleService {
     }
 
     private remoteData(id: string, roles: Role[]) {
-        roles = roles.filter(function (element:any) {
-            return element.id != id;
+        roles = roles.filter(function(element: any) {
+            return element.id !== id;
         });
 
         return roles;

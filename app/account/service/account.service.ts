@@ -54,14 +54,14 @@ export class AccountService {
             let url = this.restApiCfg.getRestApiUrl('account.add');
             return this.restApi.post(url, undefined, undefined, acc)
                                .then(ret => {
-                                   return this.saveData(ret, accounts)
+                                   return this.saveData(ret, accounts);
                                 });
         } else {
             // Update
             let url = this.restApiCfg.getRestApiUrl('account.put');
             return this.restApi.put(url, undefined, undefined, acc)
                                .then(ret => {
-                                   return this.saveData(ret, accounts)
+                                   return this.saveData(ret, accounts);
                                 });
         }
 
@@ -79,10 +79,10 @@ export class AccountService {
 
         return this.restApi.delete(url, pathParams, undefined, undefined)
                            .then(ret => {
-                               if (ret == undefined) {
+                               if (ret === undefined) {
                                     return undefined;
                                 }
-                               return this.remoteData(acc.id, accounts)
+                               return this.remoteData(acc.id, accounts);
                             });
     }
 
@@ -90,10 +90,10 @@ export class AccountService {
         if (!acc) {
             return undefined;
         }
-        let isExits: boolean = false;
+        let isExits = false;
 
-        accounts.forEach(function (element:any, index: number) {
-            if (element.id == acc.id) {
+        accounts.forEach(function(element: any, index: number) {
+            if (element.id === acc.id) {
                 isExits = true;
                 accounts[index] = acc;
             }
@@ -107,8 +107,8 @@ export class AccountService {
     }
 
     private remoteData(id: string, accounts: Account[]) {
-        accounts = accounts.filter(function (element:any) {
-            return element.id != id;
+        accounts = accounts.filter(function(element: any) {
+            return element.id !== id;
         });
 
         return accounts;

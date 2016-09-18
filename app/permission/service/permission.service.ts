@@ -54,14 +54,14 @@ export class PermissionService {
             let url = this.restApiCfg.getRestApiUrl('permission.add');
             return this.restApi.post(url, undefined, undefined, permission)
                                .then(ret => {
-                                   return this.saveData(ret, permissions)
+                                   return this.saveData(ret, permissions);
                                 });
         } else {
             // Update
             let url = this.restApiCfg.getRestApiUrl('permission.put');
             return this.restApi.put(url, undefined, undefined, permission)
                                .then(ret => {
-                                   return this.saveData(ret, permissions)
+                                   return this.saveData(ret, permissions);
                                 });
         }
 
@@ -79,10 +79,10 @@ export class PermissionService {
 
         return this.restApi.delete(url, pathParams, undefined, undefined)
                            .then(ret => {
-                               if (ret == undefined) {
+                               if (ret === undefined) {
                                     return undefined;
                                 }
-                               return this.remoteData(permission.id, permissions)
+                               return this.remoteData(permission.id, permissions);
                             });
     }
 
@@ -90,10 +90,10 @@ export class PermissionService {
         if (!permission) {
             return undefined;
         }
-        let isExits: boolean = false;
+        let isExits = false;
 
-        permissions.forEach(function (element:any, index: number) {
-            if (element.id == permission.id) {
+        permissions.forEach(function(element: any, index: number) {
+            if (element.id === permission.id) {
                 isExits = true;
                 permissions[index] = permission;
             }
@@ -107,8 +107,8 @@ export class PermissionService {
     }
 
     private remoteData(id: string, permissions: Permission[]) {
-        permissions = permissions.filter(function (element:any) {
-            return element.id != id;
+        permissions = permissions.filter(function(element: any) {
+            return element.id !== id;
         });
 
         return permissions;

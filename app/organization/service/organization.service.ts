@@ -44,14 +44,14 @@ export class OrganizationService {
             let url = this.restApiCfg.getRestApiUrl('organization.add');
             return this.restApi.post(url, undefined, undefined, org)
                                .then(ret => {
-                                   return this.saveData(ret, organizations)
+                                   return this.saveData(ret, organizations);
                                 });
         } else {
             // Update
             let url = this.restApiCfg.getRestApiUrl('organization.put');
             return this.restApi.put(url, undefined, undefined, org)
                                .then(ret => {
-                                   return this.saveData(ret, organizations)
+                                   return this.saveData(ret, organizations);
                                 });
         }
     }
@@ -68,10 +68,10 @@ export class OrganizationService {
 
         return this.restApi.delete(url, pathParams, undefined, undefined)
                            .then(ret => {
-                               if (ret == undefined) {
+                               if (ret === undefined) {
                                     return undefined;
                                 }
-                               return this.remoteData(org.id, organizations)
+                               return this.remoteData(org.id, organizations);
                             });
     }
 
@@ -79,10 +79,10 @@ export class OrganizationService {
         if (!org) {
             return undefined;
         }
-        let isExits: boolean = false;
+        let isExits = false;
 
-        organizations.forEach(function (element:any, index: number) {
-            if (element.id == org.id) {
+        organizations.forEach(function(element: any, index: number) {
+            if (element.id === org.id) {
                 isExits = true;
                 organizations[index] = org;
             }
@@ -96,8 +96,8 @@ export class OrganizationService {
     }
 
     private remoteData(id: string, organizations: Organization[]) {
-        organizations = organizations.filter(function (element:any) {
-            return element.id != id;
+        organizations = organizations.filter(function(element: any) {
+            return element.id !== id;
         });
 
         return organizations;
