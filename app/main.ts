@@ -1,6 +1,6 @@
-import { bootstrap }    from '@angular/platform-browser-dynamic';
+import { bootstrap } from '@angular/platform-browser-dynamic';
 
-import { SiteComponent }       from './site/component/site.component';
+import { SiteComponent } from './site/component/site.component';
 import { appRouterProviders } from './app.routes';
 
 bootstrap(SiteComponent, [
