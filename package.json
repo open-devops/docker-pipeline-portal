@@ -1,7 +1,7 @@
 {
   "name": "DevOps-Pipeline-Portal",
   "version": "1.0.0",
-  "description": "QuickStart package.json from the documentation, supplemented with testing support",
+  "description": "Open DevOps Pipeline Management Portal",
   "scripts": {
     "start": "tsc && concurrently \"tsc -w\" \"lite-server\" ",
     "docker-build": "docker build -t ng2-quickstart .",

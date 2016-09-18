@@ -3,5 +3,5 @@
 # Pipeline Portal
 Open DevOps Pipeline Management Portal
 
-# Setting hostip
-for instance : export PORTAL_LOCALHOST=192.168.32.31  
+# Setting Portal Host IP Address
+eg. export PORTAL_LOCALHOST=192.168.32.31  

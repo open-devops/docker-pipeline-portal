@@ -5,17 +5,19 @@ FROM node:latest
 
 MAINTAINER Open DevOps Team <open.devops@gmail.com>
 
-RUN mkdir -p /PipelinePortal /home/nodejs && \
+ENV APP_HOME /opt/pipeline-portal/
+
+RUN mkdir -p $APP_HOME /home/nodejs && \
     groupadd -r nodejs && \
     useradd -r -g nodejs -d /home/nodejs -s /sbin/nologin nodejs && \
     chown -R nodejs:nodejs /home/nodejs
 
-WORKDIR /PipelinePortal
-COPY ./PipelinePortal/package.json ./PipelinePortal/typings.json /PipelinePortal/
+WORKDIR $APP_HOME
+COPY package.json typings.json $APP_HOME
 RUN npm install --unsafe-perm=true
 
-COPY ./PipelinePortal /PipelinePortal
-RUN chown -R nodejs:nodejs /PipelinePortal
+COPY . $APP_HOME
+RUN chown -R nodejs:nodejs $APP_HOME
 USER nodejs
 
 CMD cat app/plconfig/model/capability-template.ts.template |sed s/PORTAL_LOCALHOST/${PORTAL_LOCALHOST}/g >app/plconfig/model/capability-template.ts && \
