@@ -16,3 +16,6 @@ _temp
 !systemjs.config.js
 !typings/typings.d.ts
 !wallaby.js
+
+app/plconfig/model/capability-template.ts
+app/common/config/systemconfig.ts

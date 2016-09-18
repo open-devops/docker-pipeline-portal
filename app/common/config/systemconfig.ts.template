@@ -1,0 +1,4 @@
+export var SystemConfig: any = {
+    apiBaseIp: 'PORTAL_LOCALHOST',
+    apiBasePort: '8600'
+};
