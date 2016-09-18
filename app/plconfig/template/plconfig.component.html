@@ -31,14 +31,14 @@
                 <option *ngFor="let pipeline of pipelines" value="{{pipeline.pipelineId}}">{{pipeline.pipelineName}}</option>
             </select>
         </div>
-        
+
         <!--Create-->
         <div class="pull-right" style="" *ngIf="plConfigStatus == 0">
             <button type="button" class="btn btn-primary" (click)="newPipeline();">
                 Create New Pipeline
             </button>
         </div>
-        
+
         <!--Save-->
         <div class="pull-right btn-left-padding"  *ngIf="plConfigStatus == 1">
             <button type="button" class="btn btn-sm btn-primary" (click)="savePipeline();">
@@ -58,9 +58,9 @@
                 <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Restart All
             </button>
         </div>
-        
+
     </div>
-    
+
     <div class="row">
         <hr>
     </div>
@@ -112,7 +112,7 @@
                 </div>
 
                 <!--Pipeline Operations-->
-                <center class="panel-footer">
+                <div class="panel-footer">
                     <button type="button" class="btn btn-sm btn-link" [disabled]="plConfigStatus != 2 || !capability.status || capability.status == 0" [class.hidden]="capability.status && capability.status != 2" (click)="startOne(capability)">
                         <span class="glyphicon glyphicon-play" aria-hidden="true"></span> Start
                     </button>
@@ -128,7 +128,7 @@
                     <!--<button type="button" class="btn btn-sm btn-link">
                         <span class="pull-right"><i class="glyphicon glyphicon-cog"></i></span>
                     </button>-->
-                </center>
+                </div>
             </div>
         </div>
     </div>
@@ -138,7 +138,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="myModalLabel">
+                    <h4 class="modal-title">
                         Remove Capability
                     </h4>
                 </div>
@@ -160,7 +160,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="myModalLabel">
+                    <h4 class="modal-title">
                         <div>
                             Select Capability Provider
                         </div>
@@ -169,8 +169,9 @@
                 <div class="modal-body">
                     <form>
                         <div class="form-group">
-                            <label for="recipient-name" class="control-label">Capability Provider:</label>
-                            <select class="form-control" *ngIf="currCapability" [(ngModel)]="currCapability.provider">
+                            <label class="control-label">Capability Provider:</label>
+                            <select name="provider" class="form-control" *ngIf="currCapability"
+                                    [(ngModel)]="currCapability.provider">
                                 <option *ngFor="let option of selectOptions" value="{{option.id}}">{{option.name}}</option>
                             </select>
                         </div>
@@ -189,7 +190,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="myModalLabel">
+                    <h4 class="modal-title">
                         <div>
                             Capability Configuration
                         </div>

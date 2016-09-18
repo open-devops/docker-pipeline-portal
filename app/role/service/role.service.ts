@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
 import { Role } from '../model/role';
 import { RestApiCfg } from '../../common/service/restapicfg.service';
 import { RestApi } from '../../common/service/restapi.service';
@@ -9,7 +8,6 @@ import 'rxjs/add/operator/toPromise';
 @Injectable()
 export class RoleService {
     constructor(
-        private http: Http,
         private restApiCfg: RestApiCfg,
         private restApi: RestApi
     ) { }
@@ -33,7 +31,7 @@ export class RoleService {
     saveRole(roles: Role[], role: Role): Promise<Role[]> {
         // let target: Role;
         // let newFlg: boolean;
-        
+
         // roles.forEach(function (element:any) {
         //     if (element.id == role.id) {
         //         // target = element;
@@ -44,7 +42,7 @@ export class RoleService {
         // if (!target) {
         //     newFlg = true;
         //     target = new Role();
-        // } 
+        // }
 
         // target.name = role.name;
         // target.organizationId = role.organizationId;
@@ -66,9 +64,9 @@ export class RoleService {
                                 });
         }
     }
-    
+
     removeRole(roles: Role[], role: Role): Promise<Role[]> {
-        
+
         let url = this.restApiCfg.getRestApiUrl('role.remove');
         let pathParams = [
             {
@@ -85,13 +83,13 @@ export class RoleService {
                                return this.remoteData(role.id, roles)
                             });
     }
-    
+
     private saveData(role: any, roles: Role[]) {
         if (!role) {
             return undefined;
         }
         let isExits: boolean = false;
-        
+
         roles.forEach(function (element:any, index: number) {
             if (element.id == role.id) {
                 isExits = true;

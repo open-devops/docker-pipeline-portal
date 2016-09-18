@@ -1,12 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ROUTER_DIRECTIVES} from '@angular/router';
-import { HTTP_PROVIDERS, ConnectionBackend, Jsonp } from '@angular/http';
 import { Organization } from '../../organization/model/organization';
 import { OrganizationService } from '../../organization/service/organization.service';
 import { Product } from '../model/product';
 import { ProductService } from '../service/product.service';
 import { ObjectService } from '../../common/service/object.service';
-import { AcountDispPipe } from '../pipe/product.pipe';
 import { RestApiCfg } from '../../common/service/restapicfg.service';
 import { RestApi } from '../../common/service/restapi.service';
 import { MessageService } from '../../common/service/message.service';
@@ -17,7 +14,6 @@ import { ToastsManager} from 'ng2-toastr/ng2-toastr';
     selector: 'product',
     templateUrl: '../template/product.component.html',
     styleUrls: ['../style/product.component.css', '../../share/css/global.css'],
-    directives: [ROUTER_DIRECTIVES],
     providers: [
         OrganizationService,
         ProductService,
@@ -25,12 +21,8 @@ import { ToastsManager} from 'ng2-toastr/ng2-toastr';
         RestApiCfg,
         RestApi,
         MessageService,
-        ToastsManager,
-        HTTP_PROVIDERS,
-        ConnectionBackend,
-        Jsonp
-    ],
-    pipes: [AcountDispPipe]
+        ToastsManager
+    ]
 })
 
 export class ProductComponent implements OnInit {
@@ -52,7 +44,7 @@ export class ProductComponent implements OnInit {
         this.filterOrgId = "";
         this.msgService.loadCfgData('app/product/config/message.json');
         this.organizationService.init()
-                                 .then(res => 
+                                 .then(res =>
                                  {
                                      this.getOrganizations();
                                  });
@@ -65,7 +57,7 @@ export class ProductComponent implements OnInit {
             .then(organizations => {
                 if (!organizations) {
                     this.msgService.error('prod-001');
-                    this.organizations = new Array<Organization>();
+                    this.organizations = [];
                 } else {
                     this.organizations = organizations;
                     if (this.organizations.length > 0) {
@@ -73,7 +65,7 @@ export class ProductComponent implements OnInit {
                         this.orgChange(null);
                     }
                 }
-                
+
             })
             .catch(error => {
                 this.error = error;
@@ -92,9 +84,9 @@ export class ProductComponent implements OnInit {
             .then(products => {
                 if (!products) {
                     this.msgService.error('prod-002');
-                    this.products = new Array<Product>();
+                    this.products = [];
                 } else {
-                    this.products = new Array<Product>();
+                    this.products = [];
 
                     let prodNames = Object.keys(products);
                     prodNames.forEach(prodName => {
@@ -103,7 +95,7 @@ export class ProductComponent implements OnInit {
                         }
                     });
                 }
-                
+
             })
             .catch(error => {
                 this.error = error;

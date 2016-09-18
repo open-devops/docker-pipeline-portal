@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ROUTER_DIRECTIVES} from '@angular/router';
-import { HTTP_PROVIDERS, ConnectionBackend, Jsonp } from '@angular/http';
 import { Organization } from '../../organization/model/organization';
 import { OrganizationService } from '../../organization/service/organization.service';
-import { Product } from '../../product/model/product';
 import { ProductService } from '../../product/service/product.service';
 import { Role } from '../../role/model/role';
 import { RoleService } from '../../role/service/role.service';
@@ -22,7 +19,6 @@ import { ToastsManager} from 'ng2-toastr/ng2-toastr';
     selector: 'permission',
     templateUrl: '../template/permission.component.html',
     styleUrls: ['../style/permission.component.css', '../../share/css/global.css'],
-    directives: [ROUTER_DIRECTIVES],
     providers: [
         OrganizationService,
         ProductService,
@@ -33,10 +29,7 @@ import { ToastsManager} from 'ng2-toastr/ng2-toastr';
         RestApiCfg,
         RestApi,
         MessageService,
-        ToastsManager,
-        HTTP_PROVIDERS,
-        ConnectionBackend,
-        Jsonp
+        ToastsManager
     ]
 })
 
@@ -71,7 +64,7 @@ export class PermissionComponent implements OnInit {
 
         this.msgService.loadCfgData('app/permission/config/message.json');
         this.organizationService.init()
-                                 .then(res => 
+                                 .then(res =>
                                  {
                                      this.getOrganizations();
                                  });
@@ -87,7 +80,7 @@ export class PermissionComponent implements OnInit {
             .then(organizations => {
                 if (!organizations) {
                     this.msgService.error('per-001');
-                    this.organizations = new Array<Organization>();
+                    this.organizations = [];
                 } else {
                     this.organizations = organizations;
                     if (this.organizations.length > 0) {
@@ -95,7 +88,7 @@ export class PermissionComponent implements OnInit {
                         this.orgChange(null);
                     }
                 }
-                
+
             })
             .catch(error => {
                 this.error = error;
@@ -107,7 +100,7 @@ export class PermissionComponent implements OnInit {
         this.permissions = [];
         this.products = [];
         this.pipelines = [];
-        
+
         this.getProdAndPL(this.filterOrgId);
         this.getRoles(this.filterOrgId);
         this.getAccounts(this.filterOrgId);
@@ -125,14 +118,14 @@ export class PermissionComponent implements OnInit {
     plChange($event: any) {
         this.getPermissions(this.filterPlId);
     }
-    
+
     getProdAndPL(id: string) {
         this.productService
             .getProducts(id)
             .then(prodAndPL => {
                 if (!prodAndPL) {
                     this.msgService.error('per-004');
-                    this.products = new Array<string>();
+                    this.products = [];
                 } else {
                     this.prodAndPL = prodAndPL;
                     this.products = Object.keys(prodAndPL);
@@ -142,25 +135,25 @@ export class PermissionComponent implements OnInit {
                         this.prodChange(null);
                     }
                 }
-                
+
             })
             .catch(error => {
                 this.error = error;
                 this.msgService.error('per-004');
             });
     }
-    
+
     getRoles(id: string) {
         this.roleService
             .getRoles(id)
             .then(roles => {
                 if (!roles) {
                     this.msgService.error('per-002');
-                    this.roles = new Array<Role>();
+                    this.roles = [];
                 } else {
                     this.roles = roles;
                 }
-                
+
             })
             .catch(error => {
                 this.error = error;
@@ -174,11 +167,11 @@ export class PermissionComponent implements OnInit {
             .then(accounts => {
                 if (!accounts) {
                     this.msgService.error('per-003');
-                    this.accounts = new Array<Account>();
+                    this.accounts = [];
                 } else {
                     this.accounts = accounts;
                 }
-                
+
             })
             .catch(error => {
                 this.error = error;
@@ -192,11 +185,11 @@ export class PermissionComponent implements OnInit {
             .then(permissions => {
                 if (!permissions) {
                     this.msgService.error('prod-005');
-                    this.permissions = new Array<Permission>();
+                    this.permissions = [];
                 } else {
                     this.permissions = permissions;
                 }
-                
+
             })
             .catch(error => {
                 this.error = error;

@@ -9,15 +9,15 @@ export var SelectOptions = [
                 "id": "JIRA",
                 "name": "Jira",
                 "img": "/app/share/img/app/jira.png",
-                "url": "http://PORTAL_LOCALHOST:9091",
-                "configItems": new Array<any>()
+                "url": "http://16.187.145.11:9091",
+                "configItems": []
             },
             {
                 "id": "REDMINE",
                 "name": "Redmine",
                 "img": "/app/share/img/app/redmine.png",
-                "url": "http://PORTAL_LOCALHOST:9092",
-                "configItems": new Array<any>()
+                "url": "http://16.187.145.11:9092",
+                "configItems": []
             }
         ]
     },
@@ -30,7 +30,7 @@ export var SelectOptions = [
                 "id": "GITLAB",
                 "name": "Gitlab",
                 "img": "/app/share/img/app/gitlab.png",
-                "url": "http://PORTAL_LOCALHOST:9010",
+                "url": "http://16.187.145.11:9010",
                 "configItems": [
                     {
                         "id": "Repository Name",
@@ -55,7 +55,7 @@ export var SelectOptions = [
                 "id": "GITHUB",
                 "name": "Github",
                 "img": "/app/share/img/app/github.png",
-                "url": "http://PORTAL_LOCALHOST:9010",
+                "url": "http://16.187.145.11:9010",
                 "configItems": [
                     {
                         "id": "Repository Url",
@@ -87,8 +87,8 @@ export var SelectOptions = [
                 "id": "JENKINS",
                 "name": "Jenkins",
                 "img": "/app/share/img/app/jenkins.png",
-                "url": "http://PORTAL_LOCALHOST:9080/blue",
-                "configItems": new Array<any>()
+                "url": "http://16.187.145.11:9080/blue",
+                "configItems": []
             }
         ]
     },
@@ -101,8 +101,8 @@ export var SelectOptions = [
                 "id": "SONARQUBE",
                 "name": "SonarQube",
                 "img": "/app/share/img/app/sonarqube.png",
-                "url": "http://PORTAL_LOCALHOST:9000",
-                "configItems": new Array<any>()
+                "url": "http://16.187.145.11:9000",
+                "configItems": []
             }
         ]
     },
@@ -115,8 +115,8 @@ export var SelectOptions = [
                 "id": "HYGIEIA",
                 "name": "Hygieia",
                 "img": "/app/share/img/app/hygieia.png",
-                "url": "http://PORTAL_LOCALHOST:9088",
-                "configItems": new Array<any>()
+                "url": "http://16.187.145.11:9088",
+                "configItems": []
             }
         ]
     },
@@ -129,8 +129,8 @@ export var SelectOptions = [
                 "id": "NEXUS",
                 "name": "Nexus",
                 "img": "/app/share/img/app/nexus.png",
-                "url": "http://PORTAL_LOCALHOST:9011",
-                "configItems": new Array<any>()
+                "url": "http://16.187.145.11:9011",
+                "configItems": []
             }
         ]
     },
@@ -143,8 +143,8 @@ export var SelectOptions = [
                 "id": "HARBOR",
                 "name": "Harbor",
                 "img": "/app/share/img/app/harbor.png",
-                "url": "http://PORTAL_LOCALHOST:9021",
-                "configItems": new Array<any>()
+                "url": "http://16.187.145.11:9021",
+                "configItems": []
             }
         ]
     },
@@ -157,8 +157,8 @@ export var SelectOptions = [
                 "id": "RANCHER",
                 "name": "Rancher",
                 "img": "/app/share/img/app/rancher.png",
-                "url": "http://PORTAL_LOCALHOST:8090",
-                "configItems": new Array<any>()
+                "url": "http://16.187.145.11:8090",
+                "configItems": []
             }
         ]
     }

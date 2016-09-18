@@ -1,23 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import { ROUTER_DIRECTIVES} from '@angular/router';
-import { HTTP_PROVIDERS } from '@angular/http';
+import { HttpModule } from '@angular/http';
 import { Dashboard } from '../data/dashboard';
 import { DashboardService } from '../service/dashboard.service';
 import { ObjectService } from '../../common/service/object.service';
-import { AcountDispPipe } from '../pipe/dashboard.pipe';
 
 @Component({
     moduleId: module.id,
     selector: 'dashboard',
     templateUrl: '../template/dashboard.component.html',
     styleUrls: ['../style/dashboard.component.css', '../../share/css/global.css'],
-    directives: [ROUTER_DIRECTIVES],
     providers: [
         DashboardService,
         ObjectService,
-        HTTP_PROVIDERS
-    ],
-    pipes: [AcountDispPipe]
+        HttpModule
+    ]
 })
 
 export class DashboardComponent implements OnInit {

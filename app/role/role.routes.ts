@@ -1,7 +1,7 @@
-import { RouterConfig } from '@angular/router';
+import { Routes } from '@angular/router';
 import { RoleComponent } from './component/role.component';
 
-export const roleRoutes: RouterConfig = [
+export const roleRoutes: Routes = [
     {
         path: 'role',
         component: RoleComponent

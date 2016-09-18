@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Http, HTTP_PROVIDERS } from '@angular/http';
+import { Http } from '@angular/http';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
-// import { ToastOptions } from 'ng2-toastr/ng2-toastr';
-
 import { MessageModel } from '../model/message';
 
 import 'rxjs/add/operator/toPromise';
@@ -25,7 +23,7 @@ export class MessageService {
                          .then(res => this.msgData = res.json())
                          .catch(this.handleError);
     }
-    
+
     getMessage(id: string):MessageModel {
         let result: MessageModel;
         for (let messageItem of this.msgData) {
@@ -60,7 +58,7 @@ export class MessageService {
         let message = this.getMessage(id) as MessageModel;
         this.toastsManager.warning(message.content, '');
     }
-    
+
     error(id: string) {
         let message = this.getMessage(id) as MessageModel;
         this.toastsManager.error(message.content, '');

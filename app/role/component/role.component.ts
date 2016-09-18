@@ -1,12 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ROUTER_DIRECTIVES} from '@angular/router';
-import { HTTP_PROVIDERS, ConnectionBackend, Jsonp } from '@angular/http';
 import { Organization } from '../../organization/model/organization';
 import { OrganizationService } from '../../organization/service/organization.service';
 import { Role } from '../model/role';
 import { RoleService } from '../service/role.service';
 import { ObjectService } from '../../common/service/object.service';
-import { AcountDispPipe } from '../pipe/role.pipe';
 import { RestApiCfg } from '../../common/service/restapicfg.service';
 import { RestApi } from '../../common/service/restapi.service';
 import { MessageService } from '../../common/service/message.service';
@@ -17,7 +14,6 @@ import { ToastsManager} from 'ng2-toastr/ng2-toastr';
     selector: 'role',
     templateUrl: '../template/role.component.html',
     styleUrls: ['../style/role.component.css', '../../share/css/global.css'],
-    directives: [ROUTER_DIRECTIVES],
     providers: [
         OrganizationService,
         RoleService,
@@ -25,12 +21,8 @@ import { ToastsManager} from 'ng2-toastr/ng2-toastr';
         RestApiCfg,
         RestApi,
         MessageService,
-        ToastsManager,
-        HTTP_PROVIDERS,
-        ConnectionBackend,
-        Jsonp
-    ],
-    pipes: [AcountDispPipe]
+        ToastsManager
+    ]
 })
 
 export class RoleComponent implements OnInit {
@@ -52,7 +44,7 @@ export class RoleComponent implements OnInit {
         this.filterOrgId = "";
         this.msgService.loadCfgData('app/role/config/message.json');
         this.organizationService.init()
-                                 .then(res => 
+                                 .then(res =>
                                  {
                                      this.getOrganizations();
                                  });
@@ -65,7 +57,7 @@ export class RoleComponent implements OnInit {
             .then(organizations => {
                 if (!organizations) {
                     this.msgService.error('role-001');
-                    this.organizations = new Array<Organization>();
+                    this.organizations = [];
                 } else {
                     this.organizations = organizations;
                     if (this.organizations.length > 0) {
@@ -73,7 +65,7 @@ export class RoleComponent implements OnInit {
                         this.orgChange(null);
                     }
                 }
-                
+
             })
             .catch(error => {
                 this.error = error;
@@ -92,11 +84,11 @@ export class RoleComponent implements OnInit {
             .then(roles => {
                 if (!roles) {
                     this.msgService.error('role-002');
-                    this.roles = new Array<Role>();
+                    this.roles = [];
                 } else {
                     this.roles = roles;
                 }
-                
+
             })
             .catch(error => {
                 this.error = error;

@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
 import { Organization } from '../model/organization';
 import { RestApiCfg } from '../../common/service/restapicfg.service';
 import { RestApi } from '../../common/service/restapi.service';
@@ -9,7 +8,6 @@ import 'rxjs/add/operator/toPromise';
 @Injectable()
 export class OrganizationService {
     constructor(
-        private http: Http,
         private restApiCfg: RestApiCfg,
         private restApi: RestApi
     ) { }
@@ -26,7 +24,7 @@ export class OrganizationService {
     saveOrganization(organizations: Organization[], org: Organization): Promise<Organization[]> {
         // let target: Organization;
         // let newFlg: boolean;
-        
+
         // organizations.forEach(function (element:any) {
         //     if (element.id == org.id) {
         //         target = element;
@@ -36,7 +34,7 @@ export class OrganizationService {
         // if (!target) {
         //     newFlg = true;
         //     target = new Organization();
-        // } 
+        // }
 
         // target.name = org.name;
         // target.description = org.description;
@@ -57,9 +55,9 @@ export class OrganizationService {
                                 });
         }
     }
-    
+
     removeOrganization(organizations: Organization[], org: Organization): Promise<Organization[]> {
-        
+
         let url = this.restApiCfg.getRestApiUrl('organization.remove');
         let pathParams = [
             {
@@ -76,13 +74,13 @@ export class OrganizationService {
                                return this.remoteData(org.id, organizations)
                             });
     }
-    
+
     private saveData(org: any, organizations: Organization[]) {
         if (!org) {
             return undefined;
         }
         let isExits: boolean = false;
-        
+
         organizations.forEach(function (element:any, index: number) {
             if (element.id == org.id) {
                 isExits = true;

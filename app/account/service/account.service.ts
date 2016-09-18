@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
 import { Account } from '../model/account';
 import { RestApiCfg } from '../../common/service/restapicfg.service';
 import { RestApi } from '../../common/service/restapi.service';
@@ -9,7 +8,6 @@ import 'rxjs/add/operator/toPromise';
 @Injectable()
 export class AccountService {
     constructor(
-        private http: Http,
         private restApiCfg: RestApiCfg,
         private restApi: RestApi
     ) { }
@@ -32,7 +30,7 @@ export class AccountService {
 
     saveAccount(accounts: Account[], acc: Account): Promise<Account[]> {
         // let targetOrg: Account;
-        
+
         // accounts.forEach(function (element:any) {
         //     if (element.id == org.id) {
         //         targetOrg = element;
@@ -43,7 +41,7 @@ export class AccountService {
         //     targetOrg = new Account();
         //     targetOrg.id = 'DDC_' + accounts.length;
         //     accounts.push(targetOrg);
-        // } 
+        // }
 
         // targetOrg.name = org.name;
         // targetOrg.organizationId = org.organizationId;
@@ -68,9 +66,9 @@ export class AccountService {
         }
 
     }
-    
+
     removeAccount(accounts: Account[], acc: Account): Promise<Account[]> {
-        
+
         let url = this.restApiCfg.getRestApiUrl('account.remove');
         let pathParams = [
             {
@@ -87,13 +85,13 @@ export class AccountService {
                                return this.remoteData(acc.id, accounts)
                             });
     }
-    
+
     private saveData(acc: any, accounts: Account[]) {
         if (!acc) {
             return undefined;
         }
         let isExits: boolean = false;
-        
+
         accounts.forEach(function (element:any, index: number) {
             if (element.id == acc.id) {
                 isExits = true;
@@ -104,7 +102,7 @@ export class AccountService {
         if (!isExits) {
             accounts.push(acc);
         }
-        
+
         return accounts;
     }
 

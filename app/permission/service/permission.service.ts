@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
 import { Permission } from '../model/permission';
 import { RestApiCfg } from '../../common/service/restapicfg.service';
 import { RestApi } from '../../common/service/restapi.service';
@@ -9,7 +8,6 @@ import 'rxjs/add/operator/toPromise';
 @Injectable()
 export class PermissionService {
     constructor(
-        private http: Http,
         private restApiCfg: RestApiCfg,
         private restApi: RestApi
     ) { }
@@ -32,7 +30,7 @@ export class PermissionService {
 
     savePermission(permissions: Permission[], permission: Permission): Promise<Permission[]> {
         // let targetOrg: Permission;
-        
+
         // permissions.forEach(function (element:any) {
         //     if (element.id == org.id) {
         //         targetOrg = element;
@@ -43,7 +41,7 @@ export class PermissionService {
         //     targetOrg = new Permission();
         //     targetOrg.id = 'DDC_Permissiion_' + permissions.length;
         //     permissions.push(targetOrg);
-        // } 
+        // }
 
         // targetOrg.id = org.id;
         // targetOrg.orgName = org.orgName
@@ -68,7 +66,7 @@ export class PermissionService {
         }
 
     }
-    
+
     removePermission(permissions: Permission[], permission: Permission): Promise<Permission[]> {
 
         let url = this.restApiCfg.getRestApiUrl('permission.remove');
@@ -87,13 +85,13 @@ export class PermissionService {
                                return this.remoteData(permission.id, permissions)
                             });
     }
-    
+
     private saveData(permission: any, permissions: Permission[]) {
         if (!permission) {
             return undefined;
         }
         let isExits: boolean = false;
-        
+
         permissions.forEach(function (element:any, index: number) {
             if (element.id == permission.id) {
                 isExits = true;

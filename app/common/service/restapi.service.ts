@@ -1,16 +1,13 @@
-import { Injectable, Optional } from '@angular/core';
-import { Http, Headers, RequestOptionsArgs, Response, Jsonp, URLSearchParams } from '@angular/http';
+import { Injectable } from '@angular/core';
+import { Http, Headers, RequestOptionsArgs, Response, URLSearchParams } from '@angular/http';
 
 import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class RestApi {
 
-    public defaultHeaders : Headers;
-
     constructor(
-        private http: Http,
-        private jsonp: Jsonp
+        private http: Http
     ) {}
 
     get(url: string, pathParams: Array<any>, queryParams: any, jwt: string = undefined): Promise<any> {
@@ -34,13 +31,13 @@ export class RestApi {
         console.debug(`START ${type} ${new Date().toLocaleString()}: ${url}`);
 
         const path = pathParams ? this.createPath(url, pathParams) : url;
-        
+
         console.debug(`START ${type} ${new Date().toLocaleString()}: ${path}`);
 
-        
+
         let queryParameters = new URLSearchParams();
         let headerParams = new Headers();
-        
+
         if (jwt) {
             headerParams.append('Authorization', jwt);
         }
@@ -54,29 +51,27 @@ export class RestApi {
             headerParams.append('Content-Type', 'application/json');
             requestOptions.body = JSON.stringify(body);
         }
-        
+
 
         let resData = this.http.request(path, requestOptions)
-                               .toPromise()
-                               .then(
-                                    res => {
-                                        console.debug(`SUCCESS ${type} ${new Date().toLocaleString()}: ${path}`);
-                                        if (type == 'DELETE') {
-                                            return Promise.resolve(0);
-                                        } else {
-                                            return this.extractData(res);
-                                        }
-                                        
+                           .toPromise()
+                           .then(
+                                res => {
+                                    console.debug(`SUCCESS ${type} ${new Date().toLocaleString()}: ${path}`);
+                                    if (type == 'DELETE') {
+                                        return Promise.resolve(0);
+                                    } else {
+                                        return this.extractData(res);
                                     }
-                                )
-                                .catch(
-                                    error => {
-                                        console.debug(`FAILURE ${type} ${new Date().toLocaleString()}: ${path}`);
-                                        this.handleError(error);
-                                    }
-                                );
 
-        // console.debug(`END ${type} ${new Date().toLocaleString()}: ${path}`);
+                                }
+                            )
+                            .catch(
+                                error => {
+                                    console.debug(`FAILURE ${type} ${new Date().toLocaleString()}: ${path}`);
+                                    this.handleError(error);
+                                }
+                            );
 
         return resData;
     }
@@ -96,7 +91,7 @@ export class RestApi {
         } else {
             body = {};
         }
-        
+
         if (body) {
         //   body.forEach(function (element: any) {
         //   });

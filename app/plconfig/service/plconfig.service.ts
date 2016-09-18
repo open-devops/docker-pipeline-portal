@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Response  } from '@angular/http';
-import { PipelineProvision, PipelineCapability, PipelineCapabilityConfigItem, PipelineStatus, PLOperation } from '../model/PipelineProvision';
+import { PipelineProvision, PipelineStatus, PLOperation } from '../model/PipelineProvision';
 import { RestApiCfg } from '../../common/service/restapicfg.service';
 import { RestApi } from '../../common/service/restapi.service';
 
@@ -10,7 +9,6 @@ import 'rxjs/add/operator/toPromise';
 export class CapabilityService {
     API_PORT: string = '8700';
     constructor(
-        private http: Http,
         private restApiCfg: RestApiCfg,
         private restApi: RestApi
     ) { }
@@ -59,7 +57,7 @@ export class CapabilityService {
     }
 
     plOperation(plId: string, kind: string, opeType: PLOperation): Promise<any> {
-        let apiKey = this.getOpeApiKey(opeType);
+        let apiKey = CapabilityService.getOpeApiKey(opeType);
         let url = this.restApiCfg.getRestApiUrl(apiKey, this.API_PORT);
         let pathParams = [
             {
@@ -76,8 +74,8 @@ export class CapabilityService {
                                 return ret;
                             });
     }
-    
-    getOpeApiKey(opeType: PLOperation): string {
+
+    private static getOpeApiKey(opeType: PLOperation): string {
         let msgId: string;
 
         switch (opeType) {

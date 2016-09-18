@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ROUTER_DIRECTIVES} from '@angular/router';
-import { HTTP_PROVIDERS, ConnectionBackend, Jsonp } from '@angular/http';
+import { HttpModule, Jsonp } from '@angular/http';
 import { Organization } from '../../organization/model/organization';
 import { OrganizationService } from '../../organization/service/organization.service';
 import { Role } from '../../role/model/role';
@@ -8,18 +7,16 @@ import { RoleService } from '../../role/service/role.service';
 import { Account } from '../model/account';
 import { AccountService } from '../service/account.service';
 import { ObjectService } from '../../common/service/object.service';
-import { AcountDispPipe } from '../pipe/account.pipe';
 import { RestApiCfg } from '../../common/service/restapicfg.service';
 import { RestApi } from '../../common/service/restapi.service';
 import { MessageService } from '../../common/service/message.service';
-import { ToastsManager} from 'ng2-toastr/ng2-toastr';
+import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
 @Component({
     moduleId: module.id,
     selector: 'account',
     templateUrl: '../template/account.component.html',
     styleUrls: ['../style/account.component.css', '../../share/css/global.css'],
-    directives: [ROUTER_DIRECTIVES],
     providers: [
         OrganizationService,
         RoleService,
@@ -29,11 +26,9 @@ import { ToastsManager} from 'ng2-toastr/ng2-toastr';
         RestApi,
         MessageService,
         ToastsManager,
-        HTTP_PROVIDERS,
-        ConnectionBackend,
+        HttpModule,
         Jsonp
-    ],
-    pipes: [AcountDispPipe]
+    ]
 })
 
 export class AccountComponent implements OnInit {
@@ -57,7 +52,7 @@ export class AccountComponent implements OnInit {
         this.filterOrgId = "";
         this.msgService.loadCfgData('app/account/config/message.json');
         this.organizationService.init()
-                                 .then(res => 
+                                 .then(res =>
                                  {
                                      this.getOrganizations();
                                  });
@@ -71,7 +66,7 @@ export class AccountComponent implements OnInit {
             .then(organizations => {
                 if (!organizations) {
                     this.msgService.error('acc-001');
-                    this.organizations = new Array<Organization>();
+                    this.organizations = [];
                 } else {
                     this.organizations = organizations;
                     if (this.organizations.length > 0) {
@@ -79,7 +74,7 @@ export class AccountComponent implements OnInit {
                         this.accChange(null);
                     }
                 }
-                
+
             })
             .catch(error => {
                 this.error = error;
@@ -96,7 +91,7 @@ export class AccountComponent implements OnInit {
     roleChange($event: any) {
         // this.currAccount.roleId = this.filterOrgId;
     }
-    
+
     getRoles(id: string) {
         this.roleService
             .getRoles(id)
@@ -107,7 +102,7 @@ export class AccountComponent implements OnInit {
                 } else {
                     this.roles = roles;
                 }
-                
+
             })
             .catch(error => {
                 this.error = error;
@@ -125,7 +120,7 @@ export class AccountComponent implements OnInit {
                 } else {
                     this.accounts = accounts;
                 }
-                
+
             })
             .catch(error => {
                 this.error = error;

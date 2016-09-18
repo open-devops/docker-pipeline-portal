@@ -23,7 +23,7 @@
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_dlg" data-(click)="newProduct();">New Product</button>
         </div>
     </div>
-    
+
     <div class="row">
         <hr>
     </div>
@@ -64,7 +64,7 @@
             </table>
         </div>
         </div>
-        
+
     </div>
 
     <!-- Modal Delete Confirm-->
@@ -72,7 +72,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="myModalLabel">
+                    <h4 class="modal-title">
                         Remove Product & Pipeline
                     </h4>
                 </div>
@@ -95,7 +95,7 @@
         <div class="modal-content">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title" id="myModalLabel">
+            <h4 class="modal-title">
                 <div *ngIf="currProduct.id == ''">
                     New Product & Pipeline
                 </div>
@@ -107,20 +107,20 @@
         <div class="modal-body">
             <form>
             <div class="form-group">
-                <label for="recipient-name" class="control-label">Name:</label>
-                <input type="text" class="form-control" [(ngModel)]="currProduct.name">
+                <label class="control-label">Name:</label>
+                <input name="productName" type="text" class="form-control" [(ngModel)]="currProduct.name">
             </div>
             <div class="form-group">
-                <label for="message-text" class="control-label">Description:</label>
-                <input class="form-control"  [(ngModel)]="currProduct.description">
+                <label class="control-label">Description:</label>
+                <input name="productDescription" class="form-control"  [(ngModel)]="currProduct.description">
             </div>
             <div class="form-group">
-                <label for="message-text" class="control-label">Pipeline Name:</label>
-                <input class="form-control"  [(ngModel)]="currProduct.pipelineName">
+                <label class="control-label">Pipeline Name:</label>
+                <input name="pipelineName" class="form-control"  [(ngModel)]="currProduct.pipelineName">
             </div>
             <div class="form-group">
-                <label for="message-text" class="control-label">Pipeline Description:</label>
-                <input class="form-control"  [(ngModel)]="currProduct.pipelineDescription">
+                <label class="control-label">Pipeline Description:</label>
+                <input name="pipelineDescription" class="form-control"  [(ngModel)]="currProduct.pipelineDescription">
             </div>
             </form>
         </div>

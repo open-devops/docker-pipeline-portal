@@ -1,22 +1,22 @@
 [
   {
     "id": "role-001",
-    "content": "Faile to get organization data.",
+    "content": "Failed to get organization data.",
     "type": "error"
   },
   {
     "id": "role-002",
-    "content": "Faile to get role data.",
+    "content": "Failed to get role data.",
     "type": "error"
   },
   {
     "id": "role-003",
-    "content": "Faile to save role data.",
+    "content": "Failed to save role data.",
     "type": "error"
   },
   {
     "id": "role-004",
-    "content": "Faile to delete role data.",
+    "content": "Failed to delete role data.",
     "type": "error"
   }
 ]

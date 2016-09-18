@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ROUTER_DIRECTIVES } from '@angular/router';
-import { HTTP_PROVIDERS, ConnectionBackend, Jsonp } from '@angular/http';
 import { Organization } from '../../organization/model/organization';
 import { OrganizationService } from '../../organization/service/organization.service';
-import { Product } from '../../product/model/product';
 import { ProductService } from '../../product/service/product.service';
 import { PipelineProvision, PipelineCapability, PipelineCapabilityConfigItem, PipelineStatus, PLOperation, CapabilityStatus } from '../model/PipelineProvision';
 import * as CapTemplate from '../model/capability-template';
@@ -19,7 +16,6 @@ import { ToastsManager} from 'ng2-toastr/ng2-toastr';
     selector: 'pl-config',
     templateUrl: '../template/plconfig.component.html',
     styleUrls: ['../style/plconfig.component.css', '../../share/css/global.css'],
-    directives: [ROUTER_DIRECTIVES],
     providers: [
         OrganizationService,
         ProductService,
@@ -28,10 +24,7 @@ import { ToastsManager} from 'ng2-toastr/ng2-toastr';
         RestApiCfg,
         RestApi,
         MessageService,
-        ToastsManager,
-        HTTP_PROVIDERS,
-        ConnectionBackend,
-        Jsonp
+        ToastsManager
     ]
 })
 
@@ -44,7 +37,7 @@ export class PLConfigComponent implements OnInit{
     pipelineProvision: PipelineProvision;
     capabilities: PipelineCapability[];
     plConfigStatus: number = 0;    //0:none, 1:creating, 2:done
-    
+
     filterOrgId: string;
     filterProdName: string;
     filterPlId: string;
@@ -52,7 +45,7 @@ export class PLConfigComponent implements OnInit{
     currCapability: PipelineCapability;
     currConfigs: PipelineCapabilityConfigItem[];
     selectOptions: any[];
-    
+
     error: any;
 
     constructor(
@@ -64,17 +57,16 @@ export class PLConfigComponent implements OnInit{
 
     // Initialization
     ngOnInit() {
-        this
         this.filterOrgId = "";
         this.filterProdName = '';
         this.filterPlId ='';
 
         this.currCapability = new PipelineCapability();
-        
+
 
         this.msgService.loadCfgData('app/plconfig/config/message.json');
         this.organizationService.init()
-                                 .then(res => 
+                                 .then(res =>
                                  {
                                      this.getOrganizations();
                                  });
@@ -84,7 +76,7 @@ export class PLConfigComponent implements OnInit{
     orgChange($event: any) {
         this.products = [];
         this.pipelines = [];
-        
+
         this.getProdAndPL(this.filterOrgId);
     }
 
@@ -103,7 +95,7 @@ export class PLConfigComponent implements OnInit{
         this.plConfigStatus = 0;
         this.getPipelineProvision(this.filterPlId);
     }
-    
+
     // Get Data From Server
     getOrganizations() {
         this.organizationService
@@ -111,7 +103,7 @@ export class PLConfigComponent implements OnInit{
             .then(organizations => {
                 if (!organizations) {
                     this.msgService.error('pl-001');
-                    this.organizations = new Array<Organization>();
+                    this.organizations = [];
                 } else {
                     this.organizations = organizations;
                     if (this.organizations.length > 0) {
@@ -119,21 +111,21 @@ export class PLConfigComponent implements OnInit{
                         this.orgChange(null);
                     }
                 }
-                
+
             })
             .catch(error => {
                 this.error = error;
                 this.msgService.error('pl-001');
             });
     }
-    
+
     getProdAndPL(id: string) {
         this.productService
             .getProducts(id)
             .then(prodAndPL => {
                 if (!prodAndPL) {
                     this.msgService.error('pl-002');
-                    this.products = new Array<string>();
+                    this.products = [];
                 } else {
                     this.prodAndPL = prodAndPL;
                     this.products = Object.keys(prodAndPL);
@@ -143,7 +135,7 @@ export class PLConfigComponent implements OnInit{
                         this.prodChange(null);
                     }
                 }
-                
+
             })
             .catch(error => {
                 this.error = error;
@@ -181,13 +173,13 @@ export class PLConfigComponent implements OnInit{
 
     formatCapability(capabilities: PipelineCapability[]) {
         capabilities.forEach((element, index) => {
-            
+
             // Capability Provider Info
             for (let i=0; i<CapTemplate.SelectOptions.length; i++) {
                 let capKind = CapTemplate.SelectOptions[i];
                 if (element.kind == capKind.kind) {
                     capabilities[index].providerName = capabilities[index].provider;
-                    capabilities[index].class = this.calcClass(capKind.dispWidth);
+                    capabilities[index].class = PLConfigComponent.calcClass(capKind.dispWidth);
                     capabilities[index].description = capKind.description;
 
                     // Capability Selectable Providers Info
@@ -195,7 +187,7 @@ export class PLConfigComponent implements OnInit{
                         if (capabilities[index].provider == opt.name) {
                             capabilities[index].url = opt.url;
                             capabilities[index].img = opt.img;
-                            capabilities[index].configItems = capabilities[index].configItems || new Array<PipelineCapabilityConfigItem>();
+                            capabilities[index].configItems = capabilities[index].configItems || [];
 
                             // Capability Provider Config Items Info
                             if (capabilities[index].configItems.length > 0 && opt.configItems.length > 0) {
@@ -214,12 +206,12 @@ export class PLConfigComponent implements OnInit{
                                     newItem.kind = cfgItem.kind;
                                     newItem.name = cfgItem.id;
                                     newItem['template'] = cfgItem;
-            
+
                                     capabilities[index].configItems.push(newItem);
                                 })
                             }
-                            
-                            
+
+
                         }
                     });
                     break;
@@ -248,9 +240,9 @@ export class PLConfigComponent implements OnInit{
 
     newPipeline() {
         this.plConfigStatus = 1;
-        this.pipelineProvision.capabilities = new Array<PipelineCapability>();
+        this.pipelineProvision.capabilities = [];
         this.capabilities = this.pipelineProvision.capabilities;
-    
+
         this.initPipeline(0);
     }
 
@@ -263,18 +255,18 @@ export class PLConfigComponent implements OnInit{
 
         let capability = new PipelineCapability();
         capability.kind = element.kind;
-        capability.class = this.calcClass(element.dispWidth);
+        capability.class = PLConfigComponent.calcClass(element.dispWidth);
         capability.driver = 'Docker';
         capability.description = element.description;
 
         this.capabilities.push(capability);
-        
+
         setTimeout(() => {
             this.initPipeline(index);
         }, 200);
     }
 
-    calcClass(width: number): string {
+    private static calcClass(width: number): string {
         let classStr: string = 'col-lg-3';
         switch(width) {
             case 1:
@@ -320,10 +312,10 @@ export class PLConfigComponent implements OnInit{
                         capability.configItems.push(newItem);
                     });
                 }
-                
+
             }
         });
-        
+
         this.capabilities.forEach((element, index) => {
             if (element.kind == capability.kind) {
                 this.capabilities[index] = capability;
@@ -333,7 +325,7 @@ export class PLConfigComponent implements OnInit{
 
     configCapability(capability: PipelineCapability) {
         this.currCapability = capability;
-        this.currConfigs = new Array<any>();
+        this.currConfigs = [];
         if (capability.configItems) {
             capability.configItems.forEach(element => {
                 this.currConfigs.push(this.objectService.deepClone(element));
@@ -364,7 +356,7 @@ export class PLConfigComponent implements OnInit{
     }
 
     // showCapabilityPage(capability: PipelineCapability) {
-        
+
     // }
 
     confirmRemoveCapability(capability: PipelineCapability) {
@@ -461,7 +453,7 @@ export class PLConfigComponent implements OnInit{
 
     formatCapabilityStatus(status: string): CapabilityStatus {
         let capStatus: CapabilityStatus;
-        
+
         switch (status.toLowerCase()) {
             case 'up':
                 capStatus = CapabilityStatus.Up;
@@ -472,7 +464,7 @@ export class PLConfigComponent implements OnInit{
             case 'N/A':
                 capStatus = CapabilityStatus.NA;
                 break;
-        
+
             default:
                 capStatus = CapabilityStatus.NA;
                 break;

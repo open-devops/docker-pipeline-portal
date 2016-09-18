@@ -1,22 +1,22 @@
 [
   {
     "id": "prod-001",
-    "content": "Faile to get organization data.",
+    "content": "Failed to get organization data.",
     "type": "error"
   },
   {
     "id": "prod-002",
-    "content": "Faile to get prod data.",
+    "content": "Failed to get prod data.",
     "type": "error"
   },
   {
     "id": "prod-003",
-    "content": "Faile to save prod data.",
+    "content": "Failed to save prod data.",
     "type": "error"
   },
   {
     "id": "prod-004",
-    "content": "Faile to delete prod data.",
+    "content": "Failed to delete prod data.",
     "type": "error"
   }
 ]

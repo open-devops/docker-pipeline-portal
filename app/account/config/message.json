@@ -1,27 +1,27 @@
 [
   {
     "id": "acc-001",
-    "content": "Faile to get organization data.",
+    "content": "Failed to get organization data.",
     "type": "error"
   },
   {
     "id": "acc-002",
-    "content": "Faile to get role data.",
+    "content": "Failed to get role data.",
     "type": "error"
   },
   {
     "id": "acc-003",
-    "content": "Faile to get account data.",
+    "content": "Failed to get account data.",
     "type": "error"
   },
   {
     "id": "acc-004",
-    "content": "Faile to save organization data.",
+    "content": "Failed to save organization data.",
     "type": "error"
   },
   {
     "id": "acc-005",
-    "content": "Faile to delete organization data.",
+    "content": "Failed to delete organization data.",
     "type": "error"
   }
 ]

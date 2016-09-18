@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ROUTER_DIRECTIVES} from '@angular/router';
-import { HTTP_PROVIDERS, ConnectionBackend, Jsonp } from '@angular/http';
 import { Organization } from '../model/organization';
 import { OrganizationService } from '../service/organization.service';
 import { ObjectService } from '../../common/service/object.service';
@@ -14,17 +12,13 @@ import { ToastsManager} from 'ng2-toastr/ng2-toastr';
     selector: 'organization',
     templateUrl: '../template/organization.component.html',
     styleUrls: ['../style/organization.component.css', '../../share/css/global.css'],
-    directives: [ROUTER_DIRECTIVES],
     providers: [
         OrganizationService,
         ObjectService,
         RestApiCfg,
         RestApi,
         MessageService,
-        HTTP_PROVIDERS,
-        ToastsManager,
-        ConnectionBackend,
-        Jsonp
+        ToastsManager
     ]
 })
 
@@ -43,7 +37,7 @@ export class OrganizationComponent implements OnInit {
         this.currOrganization = new Organization();
         this.msgService.loadCfgData('app/organization/config/message.json');
         this.organizationService.init()
-                                 .then(res => 
+                                 .then(res =>
                                  {
                                      this.getOrganizations();
                                  });
@@ -56,7 +50,7 @@ export class OrganizationComponent implements OnInit {
                 if (!organizations) {
                     this.msgService.error('org-001');
                 }
-                this.organizations = organizations || new Array<Organization>();
+                this.organizations = organizations || [];
             })
             .catch(error => {
                 this.error = error;

@@ -1,7 +1,7 @@
-import { RouterConfig } from '@angular/router';
+import { Routes } from '@angular/router';
 import { PermissionComponent } from './component/permission.component';
 
-export const permissionRoutes: RouterConfig = [
+export const permissionRoutes: Routes = [
     {
         path: 'permission',
         component: PermissionComponent

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, HTTP_PROVIDERS } from '@angular/http';
+import { Http } from '@angular/http';
 
 import { RestApiModel } from '../model/rest';
 import { SystemConfig } from '../config/systemconfig';
@@ -19,13 +19,13 @@ export class RestApiCfg {
     loadCfgData(): Promise<any> {
         return this.http.get('app/common/config/restapi.json')
                          .toPromise()
-                         .then(res => 
+                         .then(res =>
                          {
                              this.restApiList = res.json()
                          })
                          .catch(this.handleError);
     }
-    
+
     getRestApiUrl(apiId: string, port?: string): string {
         let url = '';
         port = port || this.basePort;

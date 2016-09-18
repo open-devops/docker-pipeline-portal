@@ -23,7 +23,7 @@
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_dlg" data-(click)="newAccount();">New Account</button>
         </div>
     </div>
-    
+
     <div class="row">
         <hr>
     </div>
@@ -64,15 +64,15 @@
             </table>
         </div>
         </div>
-        
+
     </div>
 
     <!-- Modal Delete Confirm-->
-    <div class="modal fade" id="del_dlg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal fade" id="del_dlg" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="myModalLabel">
+                    <h4 class="modal-title">
                         Remove Account
                     </h4>
                 </div>
@@ -90,12 +90,12 @@
     </div>
 
     <!-- Modal Add/Modify-->
-    <div class="modal fade" id="modal_dlg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal fade" id="modal_dlg" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title" id="myModalLabel">
+            <h4 class="modal-title">
                 <div *ngIf="currAccount.id == ''">
                     New Account
                 </div>
@@ -107,24 +107,21 @@
         <div class="modal-body">
             <form>
             <div class="form-group">
-                <label for="recipient-name" class="control-label">Name:</label>
-                <input type="text" class="form-control" [(ngModel)]="currAccount.name">
-            </div>
-            <!--<div class="form-group">
-                <label for="recipient-name" class="control-label">Organization Id:</label>
-                <input type="text" class="form-control" [(ngModel)]="currAccount.orgId">
-            </div>-->
-            <div class="form-group">
-                <label for="message-text" class="control-label">E-Mail:</label>
-                <input class="form-control"  [(ngModel)]="currAccount.mail">
+                <label class="control-label">Name:</label>
+                <input name="accountName" type="text" class="form-control" [(ngModel)]="currAccount.name">
             </div>
             <div class="form-group">
-                <label for="message-text" class="control-label">Access Token:</label>
-                <input class="form-control"  [(ngModel)]="currAccount.accessToken">
+                <label class="control-label">E-Mail:</label>
+                <input name="accountEmail" class="form-control"  [(ngModel)]="currAccount.mail">
             </div>
             <div class="form-group">
-                <label for="message-text" class="control-label">Role:</label>
-                <select class="form-control" [(ngModel)]="currAccount.roleId" (ngModelChange)="roleChange($event)">
+                <label class="control-label">Access Token:</label>
+                <input name="accessToken" class="form-control"  [(ngModel)]="currAccount.accessToken">
+            </div>
+            <div class="form-group">
+                <label class="control-label">Role:</label>
+                <select name="role" class="form-control" [(ngModel)]="currAccount.roleId"
+                        (ngModelChange)="roleChange($event)">
                     <option *ngFor="let role of roles" value="{{role.id}}">{{role.name}}</option>
                 </select>
             </div>

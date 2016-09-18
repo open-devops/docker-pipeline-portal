@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
 import { Product } from '../model/product';
 import { RestApiCfg } from '../../common/service/restapicfg.service';
 import { RestApi } from '../../common/service/restapi.service';
@@ -9,7 +8,6 @@ import 'rxjs/add/operator/toPromise';
 @Injectable()
 export class ProductService {
     constructor(
-        private http: Http,
         private restApiCfg: RestApiCfg,
         private restApi: RestApi
     ) { }
@@ -32,7 +30,7 @@ export class ProductService {
 
     saveProduct(products: Product[], prod: Product): Promise<Product[]> {
         // let targetOrg: Product;
-        
+
         // products.forEach(function (element:any) {
         //     if (element.id == org.id) {
         //         targetOrg = element;
@@ -43,7 +41,7 @@ export class ProductService {
         //     targetOrg = new Product();
         //     targetOrg.id = 'DDC_' + products.length;
         //     products.push(targetOrg);
-        // } 
+        // }
 
         // targetOrg.name = org.name;
         // targetOrg.orgId = org.orgId;
@@ -68,9 +66,9 @@ export class ProductService {
         }
 
     }
-    
+
     removeProduct(products: Product[], prod: Product): Promise<Product[]> {
-        
+
         let url = this.restApiCfg.getRestApiUrl('prod.remove');
         let pathParams = [
             {
@@ -87,13 +85,13 @@ export class ProductService {
                                return this.remoteData(prod.id, products)
                             });
     }
-    
+
     private saveData(prod: any, products: Product[]) {
         if (!prod) {
             return undefined;
         }
         let isExits: boolean = false;
-        
+
         products.forEach(function (element:any, index: number) {
             if (element.id == prod.id) {
                 isExits = true;

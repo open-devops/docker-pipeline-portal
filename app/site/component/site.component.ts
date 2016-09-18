@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ROUTER_DIRECTIVES, Router } from '@angular/router';
-import { HTTP_PROVIDERS } from '@angular/http';
+import { Router } from '@angular/router';
 import { SiteMenu } from '../data/siteMenu';
 import { SiteService } from '../service/site.service';
 
@@ -9,10 +8,8 @@ import { SiteService } from '../service/site.service';
     selector: 'devops-pipline-portal',
     templateUrl: '../template/site.component.html',
     styleUrls: ['../style/site.component.css'],
-    directives: [ROUTER_DIRECTIVES],
     providers: [
-        SiteService,
-        HTTP_PROVIDERS
+        SiteService
     ]
 })
 
@@ -43,7 +40,7 @@ export class SiteComponent implements OnInit {
 
     selectMenu(menu: SiteMenu) {
         this.selectedMenu = menu;
-        
+
         let link = [menu.path];
         this.router.navigate(link)
     }
