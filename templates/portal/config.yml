@@ -1,0 +1,8 @@
+name: CATALOGNAME
+description: |
+   Portal Image for Open DevOps Pipeline 
+version:  1.0.0
+category:  CO
+maintainer:  open.devops
+license:  Apache 2
+projectURL: https://github.com/ open-devops/pipeline-portal

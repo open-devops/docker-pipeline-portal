@@ -1,0 +1,5 @@
+#  Portal Image for Open DevOps Pipeline 
+portal:
+  image:  devopsopen/pipeline-portal
+  ports:
+    - " 10011:3000"
